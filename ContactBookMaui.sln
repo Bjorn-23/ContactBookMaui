@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactBookMaui", "ContactBookMaui\ContactBookMaui.csproj", "{B755D0D5-3715-4116-AC33-0B0BFA7103F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactBook_Shared", "ContactBook_Shared\ContactBook_Shared.csproj", "{B689E975-4452-4EAA-A252-EC3679D13162}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B755D0D5-3715-4116-AC33-0B0BFA7103F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B755D0D5-3715-4116-AC33-0B0BFA7103F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B755D0D5-3715-4116-AC33-0B0BFA7103F7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B755D0D5-3715-4116-AC33-0B0BFA7103F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B755D0D5-3715-4116-AC33-0B0BFA7103F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B755D0D5-3715-4116-AC33-0B0BFA7103F7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B689E975-4452-4EAA-A252-EC3679D13162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B689E975-4452-4EAA-A252-EC3679D13162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B689E975-4452-4EAA-A252-EC3679D13162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B689E975-4452-4EAA-A252-EC3679D13162}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {43AAF0FB-4602-4111-B11B-69A27BB6FE1F}
+	EndGlobalSection
+EndGlobal
