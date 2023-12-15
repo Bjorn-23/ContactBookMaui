@@ -74,7 +74,8 @@ public class ContactRepository : IContactRepository
         {
             Debug.WriteLine(ex.Message);
         }
-        return null!;
+        //return null!;
+        return [];
     }
 
     public bool UpdateContactToListByEmail(IPContact contactToDelete, PContact updatedContact)

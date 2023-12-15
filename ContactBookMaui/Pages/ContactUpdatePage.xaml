@@ -14,35 +14,53 @@
             <Grid RowDefinitions="auto, auto, *">
                 
                 <VerticalStackLayout Grid.Row="0">                    
-                    <Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}" Margin="0,0,0,15"/>
+                    <!--<Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}" Margin="0,0,0,15"/>-->
 
-                    <Label Text="Type email of contact to update" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
+                    <Label Text="Type email of contact to update:" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
                     <Entry Text="{Binding RegistrationForm.Email}"/>
 
                     <Button Text="Get Contact To Update" CommandParameter="{Binding RegistrationForm}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}" Margin="0,15"/>
                 </VerticalStackLayout>
 
-                <CollectionView Grid.Row="1" ItemsSource="{Binding SinglePContactByEmail}" Margin="0,30" HorizontalOptions="Center">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type models:PContact}">
+                <Grid Grid.Row="1" ColumnDefinitions="*, auto, *">
 
-                            <VerticalStackLayout>
-                                    <HorizontalStackLayout>
-                                        <Label Text="{Binding FirstName }" FontSize="16"/>
-                                        <Label Text="" WidthRequest="5" />
-                                        <Label Text="{Binding LastName}" FontSize="16"/>
-                                    </HorizontalStackLayout>
+                    <CollectionView Grid.Column="0" ItemsSource="{Binding SinglePContactByEmail}" Margin="0,20" HorizontalOptions="Center">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type models:PContact}">
+
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding FullName}" FontSize="16" />
                                     <Label Text="{Binding Email}" FontSize="14" />
                                     <Label Text="{Binding PhoneNumber}" FontSize="14" />
                                     <Label Text="{Binding Address}" FontSize="14" />
-                            </VerticalStackLayout>
+                                </VerticalStackLayout>
 
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Label Grid.Column="1"  Text="Will be updated to:" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+
+                    <CollectionView Grid.Column="2" ItemsSource="{Binding UpdatedContactByEmail}" Margin="0,20" HorizontalOptions="Center">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type models:PContact}">
+
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding FullName}" FontSize="16" />
+                                    <Label Text="{Binding Email}" FontSize="14" />
+                                    <Label Text="{Binding PhoneNumber}" FontSize="14" />
+                                    <Label Text="{Binding Address}" FontSize="14" />
+                                </VerticalStackLayout>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                </Grid>
+                
 
                 <VerticalStackLayout Grid.Row="2">                    
-                    <Label Text="Type in new details" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
+                    <Label Text="Fill out new details for contact:" FontSize="16" FontAttributes="Bold" Margin="10,0,0,5" />
 
                     <Label Text="First Name" Margin="10,15,0,5" />
                     <Entry Text="{Binding RegistrationForm.FirstName}"/>

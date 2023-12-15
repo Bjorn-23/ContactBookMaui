@@ -27,6 +27,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<IPContact> _singlePContactByEmail = [];
 
+    [ObservableProperty]
+    private ObservableCollection<IPContact> _updatedContactByEmail = [];
+
     [RelayCommand]
     public void AddContactToList()
     {
@@ -66,6 +69,7 @@ public partial class MainViewModel : ObservableObject
                 var result = _contactRepository.UpdateContactToListByEmail((IPContact)contactToDelete, updatedContact);
                 if (result)
                 {
+                    UpdatedContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(updatedContact).Select(contact => contact).ToList()) ?? [];
                     UpdateContactList();
                     RegistrationForm = new();
                 }
@@ -80,10 +84,23 @@ public partial class MainViewModel : ObservableObject
         {
             if (contactToUpdate.Email != null!)
             {
-                SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList());
+                SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList()) ?? [];
+                UpdatedContactByEmail = [];
+                if (SinglePContactByEmail.Count == 0)//if (!SinglePContactByEmail.Any())
+                {
+                    SinglePContactByEmail = [];
+                    UpdatedContactByEmail = [];
+                    ErrorOnUpDateAlert("2");
+
+                }
             }
-            else
-                ErrorOnUpDateAlert();
+            else if (contactToUpdate.Email == null)
+            {
+                SinglePContactByEmail = [];
+                UpdatedContactByEmail = [];
+                ErrorOnUpDateAlert("1");
+
+            }
         }
         catch (Exception ex)
         {
@@ -133,8 +150,17 @@ public partial class MainViewModel : ObservableObject
     }
 
 
-    private async void ErrorOnUpDateAlert()
+    private async void ErrorOnUpDateAlert(string num)
     {
-        await Shell.Current.DisplayAlert("Error - No Email provided", "Please Enter An Email", "Continue")!;
+        switch (num)
+        {
+            case "1":
+                await Shell.Current.DisplayAlert("400 Bad Request - No Email provided", "Please Enter An Email", "Continue")!;
+                break;
+            case "2":
+                await Shell.Current.DisplayAlert("404 Not Found - No Contact with that Email", "Please Enter A Valid Email", "Continue")!;
+                break;
+
+        }
     }
 }

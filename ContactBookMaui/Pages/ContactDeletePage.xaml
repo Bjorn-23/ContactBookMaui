@@ -9,7 +9,9 @@
              Title="Contact Delete Page">
 
     <VerticalStackLayout Margin="15">
-        <Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}"/>
+        <!--<Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}"/>-->
+        <Label Text="Type in email of contact to delete" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
+
 
     </VerticalStackLayout>
 </ContentPage>

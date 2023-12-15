@@ -8,5 +8,24 @@
 
             MainPage = new AppShell();
         }
+
+        protected override Window CreateWindow(IActivationState activationState)
+        {
+            var window = base.CreateWindow(activationState);
+
+            const int newWidth = 700;
+            const int newHeight = 1000;
+
+            //Sets initial width and height of window - but is resizable
+            //window.Width = newWidth;
+            //window.Height = newHeight;
+
+            //Sets static size of window - not resizable
+            window.MinimumWidth = window.MaximumWidth = window.Width = newWidth;
+            window.MinimumHeight = window.MaximumHeight = window.Height = newHeight;
+
+            return window;
+        }
     }
+
 }
