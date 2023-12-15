@@ -15,9 +15,7 @@ public partial class MainViewModel : ObservableObject
     {
         _contactRepository = contactRepository;
         UpdateCustomerList();
-    }
-
-    
+    }    
 
     /// <summary>
     /// new PContact Entry
@@ -54,6 +52,19 @@ public partial class MainViewModel : ObservableObject
             }
         }
     }
+
+    [RelayCommand]
+    private async Task NavigateToAddContact()
+    {
+        await Shell.Current.GoToAsync("ContactAddPage");
+    }
+
+    [RelayCommand]
+    private async Task NavigateToContactList()
+    {
+        await Shell.Current.GoToAsync(".."); // Changed from ContactListPage to .. as nav wouldnt work otherwise.
+    }
+
     public void UpdateCustomerList()
     {
         PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());

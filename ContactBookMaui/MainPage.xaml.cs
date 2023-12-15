@@ -10,7 +10,7 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
-    //protected override async void OnAppearing()
+    //protected override async void OnAppearing() // TRYING TO MAKE ANDROID PERMISSIONS TO WORK
     //{
     //    base.OnAppearing();
 

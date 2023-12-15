@@ -1,6 +1,7 @@
 ﻿using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Repositories;
 using ContactBook_Shared.Services;
+using ContactBookMaui.Pages;
 using ContactBookMaui.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -23,6 +24,8 @@ namespace ContactBookMaui
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<IContactRepository, ContactRepository>();
             builder.Services.AddSingleton<IFileServices, FileServices>();
+            builder.Services.AddSingleton<ContactAddPage>();
+            builder.Services.AddSingleton<ContactListPage>();
 
             return builder.Build();
         }
