@@ -1,22 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             
-             xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
-             x:DataType="{x:Type viewmodel:MainViewModel}"             
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"          
              x:Class="ContactBookMaui.MainPage">
-
-    <ScrollView>
-
-        <VerticalStackLayout>
-
-            <Button Grid.Row="0" Text="Nav - Add New Contact" Command="{Binding NavigateToAddContactCommand}"/>
-            <Button Grid.Row="0" Text="Nav - List All Contacts" Command="{Binding NavigateToListAllContactCommand}"/>
-            <Button Grid.Row="0" Text="Nav - Update Contact" Command="{Binding NavigateToUpdateContactCommand}"/>
-            <Button Grid.Row="0" Text="Nav - Delete Contact" Command="{Binding NavigateToDeleteContactCommand}"/>
-
-        </VerticalStackLayout>
-
-    </ScrollView>
-
 </ContentPage>

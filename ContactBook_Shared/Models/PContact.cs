@@ -9,4 +9,5 @@ public class PContact : IPContact
     public string Email { get; set; } = null!;
     public string PhoneNumber { get; set; } = null!;
     public string Address { get; set; } = null!;
+    public string FullName => $"{FirstName} {LastName}";
 }   

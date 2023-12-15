@@ -9,7 +9,7 @@
              Title="Contact Add Page">
     
     <VerticalStackLayout Margin="15">
-        <Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}" Margin="0, 15"/>
+        <Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}" Margin="0,0,0,15"/>
        
         <Label Text="First Name" Margin="10,15,0,5" />
         <Entry Text="{Binding RegistrationForm.FirstName}"/>

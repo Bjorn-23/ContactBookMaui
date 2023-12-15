@@ -9,4 +9,5 @@ public interface IPContact
     string Email { get; set; }
     string PhoneNumber { get; set; }
     string Address { get; set; }
+    public string FullName => $"{FirstName} {LastName}";
 }

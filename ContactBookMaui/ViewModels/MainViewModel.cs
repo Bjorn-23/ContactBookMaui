@@ -3,6 +3,7 @@ using ContactBook_Shared.Models;
 using ContactBook_Shared.Interfaces;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 
 
 namespace ContactBookMaui.ViewModels;
@@ -15,11 +16,8 @@ public partial class MainViewModel : ObservableObject
     {
         _contactRepository = contactRepository;
         UpdateContactList();
-    }    
+    }
 
-    /// <summary>
-    /// new PContact Entry
-    /// </summary>
     [ObservableProperty]
     private PContact _registrationForm = new();
 
@@ -57,18 +55,19 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void UpdateContactButton(IPContact contactToDelete)
+    public void UpdateContactButton(PContact updatedContact)
     {
         if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
         {
-            var updatedContact = RegistrationForm;
+            IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
 
             if (contactToDelete != null)
             {
-                var result = _contactRepository.UpdateContactToListByEmail(contactToDelete, updatedContact);
+                var result = _contactRepository.UpdateContactToListByEmail((IPContact)contactToDelete, updatedContact);
                 if (result)
                 {
                     UpdateContactList();
+                    RegistrationForm = new();
                 }
             }
         }
@@ -77,7 +76,19 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     public void GetContactByEmailButton(IPContact contactToUpdate)
     {
-        SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList());
+        try
+        {
+            if (contactToUpdate.Email != null!)
+            {
+                SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList());
+            }
+            else
+                ErrorOnUpDateAlert();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
     }
 
     [RelayCommand]
@@ -85,11 +96,11 @@ public partial class MainViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync("ContactAddPage");
     }
-    
+
     [RelayCommand]
-    private async Task NavigateToListAllContact()
+    private async Task NavigateToListContact()
     {
-        await Shell.Current.GoToAsync("ContactListAllPage");
+        await Shell.Current.GoToAsync("ContactListPage");
     }
 
     [RelayCommand]
@@ -109,12 +120,21 @@ public partial class MainViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync(".."); // Changed from ContactListPage to .. as nav wouldnt work otherwise.
     }
-
     public void UpdateContactList()
     {
-        PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
-          //  Customer.Select(customer => customer).ToList());
+        try
+        {
+            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
     }
 
 
+    private async void ErrorOnUpDateAlert()
+    {
+        await Shell.Current.DisplayAlert("Error - No Email provided", "Please Enter An Email", "Continue")!;
+    }
 }

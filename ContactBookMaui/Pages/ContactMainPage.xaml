@@ -3,18 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ContactBookMaui.Pages.ContactMainPage"
              
+             xmlns:interfaces="Contact"
+             xmlns:models="clr-namespace:ContactBook_Shared.Models;assembly=ContactBook_Shared"
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
              x:DataType="{x:Type viewmodel:MainViewModel}"
              
              Title="Contact Main Page">
-    
-    <VerticalStackLayout Margin="15">
+    <ScrollView>
+        <Grid RowDefinitions="auto, *" Margin="15">
 
-        <Button Grid.Row="0" Text="Nav - Add New Contact" Command="{Binding NavigateToAddContactCommand}" Margin="0,0,0,15"/>
-        <Button Grid.Row="0" Text="Nav - List All Contacts" Command="{Binding NavigateToListAllContactCommand}" Margin="0,0,0,15"/>
-        <Button Grid.Row="0" Text="Nav - Update Contact" Command="{Binding NavigateToUpdateContactCommand}" Margin="0,0,0,15"/>
-        <Button Grid.Row="0" Text="Nav - Delete Contact" Command="{Binding NavigateToDeleteContactCommand}" Margin="0,0,0,15"/>
+            <Grid Grid.Row="0" ColumnDefinitions="*, *">
 
-    </VerticalStackLayout>
-    
+                <VerticalStackLayout Grid.Column="0">
+                    <Button Text="Nav - Add New Contact" Command="{Binding NavigateToAddContactCommand}" Margin="0,0,0,15"/>
+                    <Button Text="Nav - List All Contacts" Command="{Binding NavigateToListContactCommand}" Margin="0,0,0,15"/>
+                </VerticalStackLayout>
+                
+                <VerticalStackLayout Grid.Column="1">
+                    <Button Text="Nav - Update Contact" Command="{Binding NavigateToUpdateContactCommand}" Margin="0,0,0,15"/>
+                    <Button Text="Nav - Delete Contact" Command="{Binding NavigateToDeleteContactCommand}" Margin="0,0,0,15"/>
+                </VerticalStackLayout>
+
+            </Grid>
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding PContactList}" Margin="0,30,0,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type models:PContact}">
+
+                        <Grid ColumnDefinitions="*, auto"  Margin="0,0,0,15">
+
+                            <VerticalStackLayout Grid.Column="0" Margin="0,20">
+                                <Label Text="{Binding FullName}" />
+                                <Label Text="{Binding Email}" />
+                                <Label Text="{Binding PhoneNumber}" />
+                                <Label Text="{Binding Address}" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Column="1" Text="X"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Path=RemoveContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}"
+                            />
+
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+        </Grid>
+    </ScrollView>
+
+
 </ContentPage>

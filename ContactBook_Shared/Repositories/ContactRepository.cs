@@ -57,13 +57,18 @@ public class ContactRepository : IContactRepository
     {
         try
         {
-            foreach (var existingContact in _contactList)
+            if (contact.Email != null)
             {
-                if (existingContact.Email.ToLower() == contact.Email.ToLower())
+                foreach (var existingContact in _contactList)
                 {
-                    return new List<IPContact> {existingContact};
-                }                  
+                    if (existingContact.Email.Equals(contact.Email, StringComparison.CurrentCultureIgnoreCase))   // if (existingContact.Email.ToLower() == contact.Email.ToLower())
+                    {
+                        return new List<IPContact> { existingContact };
+                    }
+                }
             }
+            else
+                return null!;
         }
         catch (Exception ex)
         {
@@ -113,25 +118,4 @@ public class ContactRepository : IContactRepository
         }
         return false;
     }
-
-    //public bool RemoveCustomerFromList(IPContact contactToDelete)
-    //{
-    //    try
-    //    {
-    //        if (contactToDelete != null && !string.IsNullOrWhiteSpace(contactToDelete.Email))
-    //        {
-    //            var existingCustomer = _contactList.FirstOrDefault(x => x.Email == contactToDelete.Email);
-    //            if (existingCustomer != null)
-    //            {
-    //                _contactList.Remove(contactToDelete);
-    //                return true;
-    //            }
-    //        }           
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Debug.WriteLine(ex.Message);
-    //    }
-    //    return false;
-    //}
 }

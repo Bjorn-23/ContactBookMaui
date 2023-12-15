@@ -1,4 +1,5 @@
 ﻿using ContactBook_Shared.Interfaces;
+using ContactBook_Shared.Models;
 using ContactBook_Shared.Repositories;
 using ContactBook_Shared.Services;
 using ContactBookMaui.Pages;
@@ -23,13 +24,12 @@ namespace ContactBookMaui
             builder.Services.AddSingleton<IFileServices, FileServices>();
             builder.Services.AddSingleton<IContactRepository, ContactRepository>();
             builder.Services.AddSingleton<MainViewModel>();
-            //builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<ContactMainPage>();
-            builder.Services.AddSingleton<ContactAddPage>();
-            builder.Services.AddSingleton<ContactListPage>();
-            builder.Services.AddSingleton<ContactUpdatePage>();
-            builder.Services.AddSingleton<ContactDeletePage>();
-
+            builder.Services.AddScoped<MainPage>(); //Do I keep mainpage? is it needed....?
+            builder.Services.AddScoped<ContactMainPage>();
+            builder.Services.AddScoped<ContactAddPage>();
+            builder.Services.AddScoped<ContactListPage>();
+            builder.Services.AddScoped<ContactUpdatePage>();
+            builder.Services.AddScoped<ContactDeletePage>();
 
             return builder.Build();
         }
