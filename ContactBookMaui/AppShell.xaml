@@ -6,13 +6,14 @@
     xmlns:local="clr-namespace:ContactBookMaui"
     
     xmlns:pages="clr-namespace:ContactBookMaui.Pages"
+  
     
     Shell.FlyoutBehavior="Disabled"
     Title="ContactBookMaui">
 
     <!--<FlyoutItem>
     </FlyoutItem>-->
-
+    <!--<ShellContent Title="Main" Route="MainPage" ContentTemplate="{DataTemplate }" />-->
     <ShellContent Title="Contact Main" Route="ContactMainPage" ContentTemplate="{DataTemplate pages:ContactMainPage}" />
     <ShellContent Title="Contact List" Route="ContactListAllPage" ContentTemplate="{DataTemplate pages:ContactListPage}" />
     <ShellContent Title="Add Contact" Route="ContactAddPage" ContentTemplate="{DataTemplate pages:ContactAddPage}" />

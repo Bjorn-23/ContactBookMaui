@@ -6,16 +6,15 @@
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
              x:DataType="{x:Type viewmodel:MainViewModel}"
              
-             Title="ContactMainPage">
-
+             Title="Contact Main Page">
     
-    <VerticalStackLayout>
+    <VerticalStackLayout Margin="15">
 
-        <Button Grid.Row="0" Text="Nav - Add New Contact" Command="{Binding NavigateToAddContactCommand}"/>
-        <Button Grid.Row="0" Text="Nav - List All Contacts" Command="{Binding NavigateToListAllContactCommand}"/>
-        <Button Grid.Row="0" Text="Nav - Update Contact" Command="{Binding NavigateToUpdateContactCommand}"/>
-        <Button Grid.Row="0" Text="Nav - Delete Contact" Command="{Binding NavigateToDeleteContactCommand}"/>
-
+        <Button Grid.Row="0" Text="Nav - Add New Contact" Command="{Binding NavigateToAddContactCommand}" Margin="0,0,0,15"/>
+        <Button Grid.Row="0" Text="Nav - List All Contacts" Command="{Binding NavigateToListAllContactCommand}" Margin="0,0,0,15"/>
+        <Button Grid.Row="0" Text="Nav - Update Contact" Command="{Binding NavigateToUpdateContactCommand}" Margin="0,0,0,15"/>
+        <Button Grid.Row="0" Text="Nav - Delete Contact" Command="{Binding NavigateToDeleteContactCommand}" Margin="0,0,0,15"/>
 
     </VerticalStackLayout>
+    
 </ContentPage>

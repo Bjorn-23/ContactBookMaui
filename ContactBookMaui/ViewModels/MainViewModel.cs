@@ -14,7 +14,7 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel(IContactRepository contactRepository)
     {
         _contactRepository = contactRepository;
-        UpdateCustomerList();
+        UpdateContactList();
     }    
 
     /// <summary>
@@ -26,6 +26,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<IPContact> _pContactList = [];
 
+    [ObservableProperty]
+    private ObservableCollection<IPContact> _singlePContactByEmail = [];
+
     [RelayCommand]
     public void AddContactToList()
     {
@@ -34,23 +37,47 @@ public partial class MainViewModel : ObservableObject
             var result = _contactRepository.AddContactToList(RegistrationForm);
             if (result)
             {
-                UpdateCustomerList();
+                UpdateContactList();
                 RegistrationForm = new();
             }
         }
     }
 
     [RelayCommand]
-    public void RemoveCustomerButton(IPContact contactToDelete)
+    public void RemoveContactButton(IPContact contactToDelete)
     {
         if (contactToDelete != null)
         {
             var result = _contactRepository.DeleteContactByEmail(contactToDelete);
             if (result)
             {
-                UpdateCustomerList();
+                UpdateContactList();
             }
         }
+    }
+
+    [RelayCommand]
+    public void UpdateContactButton(IPContact contactToDelete)
+    {
+        if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
+        {
+            var updatedContact = RegistrationForm;
+
+            if (contactToDelete != null)
+            {
+                var result = _contactRepository.UpdateContactToListByEmail(contactToDelete, updatedContact);
+                if (result)
+                {
+                    UpdateContactList();
+                }
+            }
+        }
+    }
+
+    [RelayCommand]
+    public void GetContactByEmailButton(IPContact contactToUpdate)
+    {
+        SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList());
     }
 
     [RelayCommand]
@@ -83,9 +110,11 @@ public partial class MainViewModel : ObservableObject
         await Shell.Current.GoToAsync(".."); // Changed from ContactListPage to .. as nav wouldnt work otherwise.
     }
 
-    public void UpdateCustomerList()
+    public void UpdateContactList()
     {
         PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
           //  Customer.Select(customer => customer).ToList());
     }
+
+
 }

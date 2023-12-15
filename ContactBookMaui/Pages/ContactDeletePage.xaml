@@ -2,8 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ContactBookMaui.Pages.ContactDeletePage"
-             Title="ContactDeletePage">
-    <VerticalStackLayout>
+             
+             xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
+             x:DataType="{x:Type viewmodel:MainViewModel}"
+             
+             Title="Contact Delete Page">
+
+    <VerticalStackLayout Margin="15">
         <Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}"/>
 
     </VerticalStackLayout>

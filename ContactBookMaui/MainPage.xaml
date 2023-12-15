@@ -2,63 +2,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              
-             xmlns:models="clr-namespace:ContactBook_Shared.Models;assembly=ContactBook_Shared"
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
-             x:DataType="{x:Type viewmodel:MainViewModel}"
-             
+             x:DataType="{x:Type viewmodel:MainViewModel}"             
              x:Class="ContactBookMaui.MainPage">
 
     <ScrollView>
 
-        <Grid RowDefinitions="auto, *" Margin="20">
+        <VerticalStackLayout>
 
-            <VerticalStackLayout Grid.Row="0">
-                <Label Text="First Name" Margin="10,15,0,5" />
-                <Entry Text="{Binding RegistrationForm.FirstName}"/>
+            <Button Grid.Row="0" Text="Nav - Add New Contact" Command="{Binding NavigateToAddContactCommand}"/>
+            <Button Grid.Row="0" Text="Nav - List All Contacts" Command="{Binding NavigateToListAllContactCommand}"/>
+            <Button Grid.Row="0" Text="Nav - Update Contact" Command="{Binding NavigateToUpdateContactCommand}"/>
+            <Button Grid.Row="0" Text="Nav - Delete Contact" Command="{Binding NavigateToDeleteContactCommand}"/>
 
-                <Label Text="Last Name" Margin="10,15,0,5"  />
-                <Entry Text="{Binding RegistrationForm.LastName}"/>
-
-                <Label Text="Email" Margin="10,15,0,5"  />
-                <Entry Text="{Binding RegistrationForm.Email}"/>
-
-                <Label Text="Phone Number" Margin="10,15,0,5"  />
-                <Entry Text="{Binding RegistrationForm.PhoneNumber}"/>
-
-                <Label Text="Address" Margin="10,15,0,5" />
-                <Entry Text="{Binding RegistrationForm.Address}"/>
-
-
-                <Button Command="{Binding AddContactToListCommand}" Text="Add To List" Margin="0,20,0,20" Padding="0,10"/>
-
-            </VerticalStackLayout>
-
-            <CollectionView Grid.Row="1" ItemsSource="{Binding PContactList}" Margin="0,30,0,0">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type models:PContact}">
-                        <!--Added 3 columns because 2 of them set to (*, auto) would remove the Email adress from any but the first row, need to figure out why...-->
-                        <Grid ColumnDefinitions="*, *, auto" Margin="0,0,0,15">
-
-                            <VerticalStackLayout Grid.Column="0" >
-                                <HorizontalStackLayout >
-                                    <Label Text="{Binding FirstName }" FontSize="16"/>
-                                    <Label Text=" " />
-                                    <Label Text="{Binding LastName}" FontSize="16"/>
-                                </HorizontalStackLayout>
-                                <Label Text="{Binding Email}" FontSize="12" />
-                            </VerticalStackLayout>
-
-                            <Button Grid.Column="2" Text="X"
-                                    CommandParameter="{Binding .}"
-                                    Command="{Binding Path=RemoveCustomerButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}" />
-
-                        </Grid>
-
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-        </Grid>
+        </VerticalStackLayout>
 
     </ScrollView>
 

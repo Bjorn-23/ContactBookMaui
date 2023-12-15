@@ -9,9 +9,8 @@
              
              Title="ContactListPage">
 
-
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout Margin="15">
 
             <Grid RowDefinitions="auto, *" Margin="20">
                 <Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}" Margin="0, 15"/>
@@ -33,7 +32,7 @@
 
                                 <Button Grid.Column="2" Text="X"
                                     CommandParameter="{Binding .}"
-                                    Command="{Binding Path=RemoveCustomerButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}" />
+                                    Command="{Binding Path=RemoveContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}" />
 
                             </Grid>
 

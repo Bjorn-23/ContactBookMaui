@@ -20,10 +20,10 @@ namespace ContactBookMaui
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<MainViewModel>();
-            builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<IContactRepository, ContactRepository>();
             builder.Services.AddSingleton<IFileServices, FileServices>();
+            builder.Services.AddSingleton<IContactRepository, ContactRepository>();
+            builder.Services.AddSingleton<MainViewModel>();
+            //builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<ContactMainPage>();
             builder.Services.AddSingleton<ContactAddPage>();
             builder.Services.AddSingleton<ContactListPage>();
