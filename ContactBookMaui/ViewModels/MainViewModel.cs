@@ -30,6 +30,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<IPContact> _updatedContactByEmail = [];
 
+    [ObservableProperty]
+    private ObservableCollection<string> _willUpdateToText = new ObservableCollection<string>();
+
     [RelayCommand]
     public void AddContactToList()
     {
@@ -63,12 +66,14 @@ public partial class MainViewModel : ObservableObject
         if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
         {
             IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
+            string textToAdd = "Will be updated to:";
 
             if (contactToDelete != null)
             {
                 var result = _contactRepository.UpdateContactToListByEmail((IPContact)contactToDelete, updatedContact);
                 if (result)
                 {
+                    WillUpdateToText.Add(textToAdd);
                     UpdatedContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(updatedContact).Select(contact => contact).ToList()) ?? [];
                     UpdateContactList();
                     RegistrationForm = new();
@@ -90,6 +95,7 @@ public partial class MainViewModel : ObservableObject
                 {
                     SinglePContactByEmail = [];
                     UpdatedContactByEmail = [];
+                    WillUpdateToText.RemoveAt(0);
                     ErrorOnUpDateAlert("2");
 
                 }
@@ -98,6 +104,7 @@ public partial class MainViewModel : ObservableObject
             {
                 SinglePContactByEmail = [];
                 UpdatedContactByEmail = [];
+                WillUpdateToText.RemoveAt(0);
                 ErrorOnUpDateAlert("1");
 
             }

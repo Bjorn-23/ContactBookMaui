@@ -39,7 +39,13 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <Label Grid.Column="1"  Text="Will be updated to:" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                    <CollectionView Grid.Column="1" ItemsSource="{Binding WillUpdateToText}" Margin="0,20" HorizontalOptions="Center" VerticalOptions="Center">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type x:String}">
+                                <Label  Text="{Binding .}" FontAttributes="Bold"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
                     <CollectionView Grid.Column="2" ItemsSource="{Binding UpdatedContactByEmail}" Margin="0,20" HorizontalOptions="Center">
                         <CollectionView.ItemTemplate>
@@ -54,7 +60,7 @@
 
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                        </CollectionView>
+                     </CollectionView>
 
                 </Grid>
                 

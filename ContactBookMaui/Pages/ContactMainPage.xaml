@@ -12,7 +12,10 @@
     <ScrollView>
         
         <VerticalStackLayout Margin="15">
-            <CollectionView ItemsSource="{Binding PContactList}" Margin="0,30,0,0">
+            <Label Text="Welcome to Contact Book X6000 PRO." FontSize="16" FontAttributes="Bold" Margin="10,15,0,0" />
+            <Label Text="Home to all your contacts since 2023." FontSize="12" FontAttributes="Italic" Margin="10,0,0,5" />
+            
+            <CollectionView ItemsSource="{Binding PContactList}" Margin="10,15,0,5">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type models:PContact}">
 
