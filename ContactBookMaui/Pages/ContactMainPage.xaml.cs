@@ -2,11 +2,11 @@ using ContactBookMaui.ViewModels;
 
 namespace ContactBookMaui.Pages;
 
-public partial class ContactListPage : ContentPage
+public partial class ContactMainPage : ContentPage
 {
-	public ContactListPage(MainViewModel viewModel)
+	public ContactMainPage(MainViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+    }
 }

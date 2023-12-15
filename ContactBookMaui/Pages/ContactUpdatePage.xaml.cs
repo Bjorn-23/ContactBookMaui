@@ -2,9 +2,9 @@ using ContactBookMaui.ViewModels;
 
 namespace ContactBookMaui.Pages;
 
-public partial class ContactListPage : ContentPage
+public partial class ContactUpdatePage : ContentPage
 {
-	public ContactListPage(MainViewModel viewModel)
+	public ContactUpdatePage(MainViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;

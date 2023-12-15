@@ -58,9 +58,27 @@ public partial class MainViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync("ContactAddPage");
     }
+    
+    [RelayCommand]
+    private async Task NavigateToListAllContact()
+    {
+        await Shell.Current.GoToAsync("ContactListAllPage");
+    }
 
     [RelayCommand]
-    private async Task NavigateToContactList()
+    private async Task NavigateToUpdateContact()
+    {
+        await Shell.Current.GoToAsync("ContactUpdatePage");
+    }
+
+    [RelayCommand]
+    private async Task NavigateToDeleteContact()
+    {
+        await Shell.Current.GoToAsync("ContactDeletePage");
+    }
+
+    [RelayCommand]
+    private async Task NavigateBack()
     {
         await Shell.Current.GoToAsync(".."); // Changed from ContactListPage to .. as nav wouldnt work otherwise.
     }
