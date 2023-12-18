@@ -19,26 +19,34 @@ public partial class ListViewModel : ObservableObject
             PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
         };
         UpdateContactList();
-    }      
+    }
 
+    /// <summary>
+    /// Main List for storing (PContacts) while application is running.
+    /// </summary>
     [ObservableProperty]
     private ObservableCollection<IPContact> _pContactList = [];
 
-    [RelayCommand]
-    public void RemoveContactButton(IPContact contactToDelete)
-    {
-        if (contactToDelete != null)
-        {
-            var result = _contactRepository.DeleteContactByEmail(contactToDelete);
-            if (result)
-            {
-                UpdateContactList();
-            }
-        }
-    }
+
+    //[RelayCommand]
+    //public void RemoveContactButton(IPContact contactToDelete)
+    //{
+    //    if (contactToDelete != null)
+    //    {
+    //        var result = _contactRepository.DeleteContactByEmail(contactToDelete);
+    //        if (result)
+    //        {
+    //            UpdateContactList();
+    //        }
+    //    }
+    //}
 
 
-
+    /// <summary>
+    /// Passes information from the (PContact) associated with the "Edit" button pressed to (ContactUpdatedPage) and navigates there
+    /// </summary>
+    /// <param name="contactToUpdate">(PContact) parameters</param>
+    /// <returns></returns>
     [RelayCommand]
     public async Task NavigateToUpdateContact(IPContact contactToUpdate)
     {
@@ -50,6 +58,11 @@ public partial class ListViewModel : ObservableObject
         await Shell.Current.GoToAsync("//ContactUpdatePage", parameters);
     }
 
+    /// <summary>
+    /// Passes information from the (PContact) associated with the "X" button pressed to (ContactDeletePage) and navigates there
+    /// </summary>
+    /// <param name="contactToUpdate">(PContact) parameters</param>
+    /// <returns></returns>
     [RelayCommand]
     public async Task NavigateToDeleteContact(IPContact contactToDelete)
     {
@@ -61,6 +74,9 @@ public partial class ListViewModel : ObservableObject
         await Shell.Current.GoToAsync("//ContactDeletePage", parameters);
     }
 
+    /// <summary>
+    /// Updates (PContactlist) in methods after that method modifies it.
+    /// </summary>
     public void UpdateContactList()
     {
         try

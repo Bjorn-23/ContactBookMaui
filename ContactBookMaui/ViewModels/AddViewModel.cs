@@ -17,12 +17,21 @@ public partial class AddViewModel : ObservableObject
         UpdateContactList();
     }
 
+    /// <summary>
+    /// Form for filling in new details via (ContactAddPage )or edit details on (ContactUpdatePage)
+    /// </summary>
     [ObservableProperty]
     private PContact _registrationForm = new();
 
+    /// <summary>
+    /// Main List for storing (PContacts) while application is running.
+    /// </summary>
     [ObservableProperty]
     private ObservableCollection<IPContact> _pContactList = [];
 
+    /// <summary>
+    /// Adds new (PContact) to PContactList
+    /// </summary>
     [RelayCommand]
     public void AddContactToList()
     {
@@ -38,12 +47,19 @@ public partial class AddViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Link To (ContactListPage), used in (AddContactToList)
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task NavigateToListContact()
     {
         await Shell.Current.GoToAsync("//ContactListPage");
     }
 
+    /// <summary>
+    /// Updates (PContactlist) in methods after that method modifies it.
+    /// </summary>
     public void UpdateContactList()
     {
         try

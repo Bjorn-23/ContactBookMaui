@@ -9,11 +9,7 @@ namespace ContactBook_Shared.Services;
 public class FileServices : IFileServices
 {
     private readonly List<IPContact> _list =[];
-
-    /// <summary>
-    /// On app start Gets the file from computer alternatively creates a new list.
-    /// </summary>
-    /// <returns></returns>
+ 
     public IEnumerable<IPContact> GetFile(string filePath)
     {
         try
@@ -46,11 +42,6 @@ public class FileServices : IFileServices
         return _list;
     }
 
-    /// <summary>
-    /// Takes in data from AddContactTolist and writes data to _fileService
-    /// </summary>
-    /// <param name="contactList"></param>
-    /// <returns>True or False, not checked currently in code</returns>
     public bool WriteToFile(List<IPContact> contactList, string filePath)
     {
         try

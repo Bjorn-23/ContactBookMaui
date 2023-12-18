@@ -7,7 +7,11 @@ using System.Diagnostics;
 
 
 namespace ContactBookMaui.ViewModels;
-
+internal enum ErrorCodes
+{
+    BadRequest, 
+    NotFound,
+}
 public partial class UpdateViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IContactRepository _contactRepository;
@@ -21,25 +25,47 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         };
         UpdateContactList();
     }
-
+    /// <summary>
+    /// Form for filling in new details via (ContactAddPage )or edit details on (ContactUpdatePage)
+    /// </summary>
     [ObservableProperty]
     private PContact _registrationForm = new();
 
+    /// <summary>
+    /// Form accepting string of email to find and display details of contacts in (PContactList) when updating (ContactUpdatePage) or deleting (ContactDeletePage) contacts.
+    /// </summary>
     [ObservableProperty]
     private PContact _emailOfContactToUpdateOrDelete = new();
 
+    /// <summary>
+    /// Main List for storing (PContacts) while application is running.
+    /// </summary>
     [ObservableProperty]
     private ObservableCollection<IPContact> _pContactList = [];
 
+    /// <summary>
+    /// List that displays the details associated with the email used in form (_emailOfContactToUpdateOrDelete)
+    /// </summary>
     [ObservableProperty]
     private ObservableCollection<IPContact> _singlePContactByEmail = [];
 
+    /// <summary>
+    /// List displaying updated contact details after using (ContactUpdatePage)
+    /// </summary>
     [ObservableProperty]
     private ObservableCollection<IPContact> _updatedContactByEmail = [];
 
+    /// <summary>
+    /// List displaying a custom text after updating a contact or deleting a contact.
+    /// </summary>
     [ObservableProperty]
     private ObservableCollection<string> _statusUpdateText = new ObservableCollection<string>();
 
+
+    /// <summary>
+    /// Creates new ObservableCollection (_singlePContactByEmail) from email input in form (_emailOfContactToUpdateOrDelete) and the method (GetContactFromListByEmail)
+    /// </summary>
+    /// <param name="contactToUpdate">Email param from IPContact</param>
     [RelayCommand]
     public void GetContactByEmailButton(IPContact contactToUpdate)
     {
@@ -55,13 +81,13 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
                 }
                 else if (SinglePContactByEmail.Count == 0)
                 {
-                    ErrorOnUpDateAlert("2");
+                    ErrorOnUpDateAlert(ErrorCodes.NotFound);
                     ClearDataOnScreen();
                 }  
             }
             else
             {
-                ErrorOnUpDateAlert("1");
+                ErrorOnUpDateAlert(ErrorCodes.BadRequest);
                 ClearDataOnScreen();
 
             }
@@ -72,13 +98,17 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         }
     }
 
+    /// <summary>
+    /// Sends (contactToDelete = SinglePContact) and (updatedContact = _registrationForm) to the method (UpdateContactToListByEmail)
+    /// </summary>
+    /// <param name="updatedContact">Input parameters from (RegistrationForm)</param>
     [RelayCommand]
     public void UpdateContactButton(PContact updatedContact)
     {
         if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
         {
             IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
-            string textToAdd = "Will be updated to:";
+            string textToAdd = "Has been updated to:";
 
             if (contactToDelete != null)
             {
@@ -94,6 +124,10 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         }
     }
 
+    /// <summary>
+    /// Cancels updating contact and returns to (ContactListPage)
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     private async Task CancelAndNavigateToListContact()
     {
@@ -101,21 +135,27 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         await Shell.Current.GoToAsync("//ContactListPage");
     }
 
-
-    private async void ErrorOnUpDateAlert(string num)
+    /// <summary>
+    /// Displays error messages when (GetContactByEmailButton) has wrong or missing input
+    /// </summary>
+    /// <param name="errorCode">Enums representing error message in a clear way.</param>
+    private async void ErrorOnUpDateAlert(ErrorCodes errorCode)
     {
-        switch (num)
+        switch (errorCode)
         {
-            case "1":
+            case ErrorCodes.BadRequest:
                 await Shell.Current.DisplayAlert("400 Bad Request - No Email provided", "Please Enter An Email", "Continue")!;
                 break;
-            case "2":
+            case ErrorCodes.NotFound:
                 await Shell.Current.DisplayAlert("404 Not Found - No Contact with that Email", "Please Enter A Valid Email", "Continue")!;
                 break;
 
         }
     }
 
+    /// <summary>
+    /// Updates (PContactlist) in methods after that method modifies it.
+    /// </summary>
     public void UpdateContactList()
     {
         try
@@ -128,9 +168,9 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         }
     }
     /// <summary>
-    /// Sets 
+    /// Takes params via Edit button from list on (ContactListPage) and passes them to (GetContactByEmailButton). Also Prepoulates (RegistrationForm) on (ContactUpdatePage) with (contactToUpdate)
     /// </summary>
-    /// <param name="query"></param>
+    /// <param name="query">(PContact) data</param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         var contactToUpdate = (query["PContact"] as PContact)!;
@@ -138,6 +178,9 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         RegistrationForm = contactToUpdate;
     }
 
+    /// <summary>
+    /// Clears form data and textmessages displayed on (ContactUpdatePage)
+    /// </summary>
     private void ClearDataOnScreen()
     {
         SinglePContactByEmail = [];

@@ -40,12 +40,7 @@ public interface IContactRepository
     bool DeleteContactByEmail(IPContact contact);
 
     /// <summary>
-    /// USed by MainViewModel To remove a contact with Button on list.
+    /// Eventhandler for methods in ContactRepository to update PContact on changes to the list.
     /// </summary>
-    /// <param name="contactToDelete"></param>
-    /// <returns></returns>
-    //bool RemoveCustomerFromList(IPContact contactToDelete);
-
-    //
     public event EventHandler? PContactListUpdated;
 }
