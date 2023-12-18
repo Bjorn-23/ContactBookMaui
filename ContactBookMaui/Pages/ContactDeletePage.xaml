@@ -51,8 +51,8 @@
                 <VerticalStackLayout Grid.Row="2">
                     <Label Text="Do you want to delete this contact?" FontSize="16" FontAttributes="Bold" Margin="10,0,0,5" />
                     <Grid ColumnDefinitions="*, *">
-                        <Button Grid.Column="0" Text="Yes - Delete Contact" Command="{Binding RemoveContactByEmailCommand}"  Margin="0,20,5,20" Padding="0,10"/>
-                        <Button Grid.Column="1" Text="No - Cancel" Command="{Binding CancelAndNavigateToListContactCommand}" Margin="5,20,0,20" Padding="0,10"/>
+                        <Button Grid.Column="0" Text="Yes - Delete Contact" FontSize="16" BackgroundColor="#E52B1D" Command="{Binding RemoveContactByEmailCommand}"  Margin="0,20,5,20" Padding="0,10"/>
+                        <Button Grid.Column="1" Text="No - Cancel" FontSize="16" BackgroundColor="#E06D2F" Command="{Binding CancelAndNavigateToListContactCommand}" Margin="5,20,0,20" Padding="0,10"/>
 
                     </Grid>
 

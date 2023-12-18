@@ -61,7 +61,7 @@ public partial class ListViewModel : ObservableObject
     /// <summary>
     /// Passes information from the (PContact) associated with the "X" button pressed to (ContactDeletePage) and navigates there
     /// </summary>
-    /// <param name="contactToUpdate">(PContact) parameters</param>
+    /// <param name="contactToDelete">(PContact) parameters</param>
     /// <returns></returns>
     [RelayCommand]
     public async Task NavigateToDeleteContact(IPContact contactToDelete)

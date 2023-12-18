@@ -27,7 +27,7 @@
         <Entry Text="{Binding RegistrationForm.Address}"/>
 
 
-        <Button Command="{Binding AddContactToListCommand}" Text="Add Contact To List" Margin="0,20,0,20" Padding="0,10"/>
+        <Button Command="{Binding AddContactToListCommand}" Text="Add Contact To List" FontSize="16" BackgroundColor="#486FE5" Margin="0,20,0,20" Padding="0,10"/>
 
         
     </VerticalStackLayout>
