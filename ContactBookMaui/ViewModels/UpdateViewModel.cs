@@ -94,6 +94,13 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         }
     }
 
+    [RelayCommand]
+    private async Task CancelAndNavigateToListContact()
+    {
+        ClearDataOnScreen();
+        await Shell.Current.GoToAsync("//ContactListPage");
+    }
+
 
     private async void ErrorOnUpDateAlert(string num)
     {

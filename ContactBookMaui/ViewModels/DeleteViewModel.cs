@@ -90,8 +90,9 @@ public partial class DeleteViewModel : ObservableObject, IQueryAttributable
     }
 
     [RelayCommand]
-    private async Task NavigateToListContact()
+    private async Task CancelAndNavigateToListContact()
     {
+        ClearDataOnScreen();
         await Shell.Current.GoToAsync("//ContactListPage");
     }
 

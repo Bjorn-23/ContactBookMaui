@@ -82,7 +82,10 @@
                     <Label Text="Address" Margin="10,15,0,5" />
                     <Entry Text="{Binding RegistrationForm.Address}"/>
 
-                    <Button Text="Update Contact" CommandParameter="{Binding RegistrationForm}" Command="{Binding Path=UpdateContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:UpdateViewModel}}}" Margin="0,20,0,20" Padding="0,10"/>
+                    <Grid ColumnDefinitions="*, *">
+                        <Button Grid.Column="0" Text="Update Contact" CommandParameter="{Binding RegistrationForm}" Command="{Binding Path=UpdateContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:UpdateViewModel}}}" Margin="0 ,20, 5, 20" Padding="0,10" />
+                        <Button Grid.Column="1" Text="Cancel" Command="{Binding CancelAndNavigateToListContactCommand}" Margin="5 ,20,0,20" Padding="0,10"/>
+                    </Grid>
                 </VerticalStackLayout>
 
             </Grid>
