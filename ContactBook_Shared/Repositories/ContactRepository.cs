@@ -32,7 +32,6 @@ public class ContactRepository : IContactRepository
         if (_fileService != null)
         {
             _fileService.GetFile(_filePath);
-            //PContactListUpdated?.Invoke(this, EventArgs.Empty);
             return _contactList;
         }
         return null!;
@@ -68,7 +67,7 @@ public class ContactRepository : IContactRepository
             {
                 foreach (var existingContact in _contactList)
                 {
-                    if (existingContact.Email.Equals(contact.Email, StringComparison.CurrentCultureIgnoreCase))   // if (existingContact.Email.ToLower() == contact.Email.ToLower())
+                    if (existingContact.Email.Equals(contact.Email, StringComparison.CurrentCultureIgnoreCase))
                     {
                         return new List<IPContact> { existingContact };
                     }

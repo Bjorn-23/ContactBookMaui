@@ -33,9 +33,15 @@ public partial class AddViewModel : ObservableObject
             {
                 UpdateContactList();
                 RegistrationForm = new();
-
+                _ = NavigateToListContact();
             }
         }
+    }
+
+    [RelayCommand]
+    private async Task NavigateToListContact()
+    {
+        await Shell.Current.GoToAsync("//ContactListPage");
     }
 
     public void UpdateContactList()
@@ -49,5 +55,6 @@ public partial class AddViewModel : ObservableObject
             Debug.WriteLine(ex.Message);
         }
     }
+
 
 }

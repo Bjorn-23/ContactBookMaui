@@ -8,17 +8,17 @@ using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
 
-public partial class UpdateViewModel : ObservableObject, IQueryAttributable
+public partial class UpdateViewModel : ObservableObject//, IQueryAttributable
 {
     private readonly IContactRepository _contactRepository;
 
     public UpdateViewModel(IContactRepository contactRepository)
     {
         _contactRepository = contactRepository;
-        _contactRepository.PContactListUpdated += (sender, e) =>
-        {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
-        };
+        //_contactRepository.PContactListUpdated += (sender, e) =>
+        //{
+        //    PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+        //};
         UpdateContactList();
     }
 
@@ -42,26 +42,25 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     {
         try
         {
-            if (contactToUpdate.Email != null!)
+            if (!string.IsNullOrWhiteSpace(contactToUpdate.Email))
             {
-                StatusUpdateText.RemoveAt(0);
+                
                 SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList()) ?? [];
                 UpdatedContactByEmail = [];
-                if (SinglePContactByEmail.Count == 0)//if (!SinglePContactByEmail.Any())
+                if (StatusUpdateText.Any())
                 {
-                    SinglePContactByEmail = [];
-                    UpdatedContactByEmail = [];
                     StatusUpdateText.RemoveAt(0);
-                    ErrorOnUpDateAlert("2");
-
                 }
+                else if (SinglePContactByEmail.Count == 0)
+                {
+                    ErrorOnUpDateAlert("2");
+                    ClearDataOnScreen();
+                }  
             }
-            else if (contactToUpdate.Email == null)
+            else
             {
-                SinglePContactByEmail = [];
-                UpdatedContactByEmail = [];
-                StatusUpdateText.RemoveAt(0);
                 ErrorOnUpDateAlert("1");
+                ClearDataOnScreen();
 
             }
         }
@@ -120,8 +119,18 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         }
     }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    //public void ApplyQueryAttributes(IDictionary<string, object> query)
+    //{
+    //    RegistrationForm = (query["PContact"] as PContact)!;
+    //}
+
+    private void ClearDataOnScreen()
     {
-        RegistrationForm = (query["PContact"] as PContact)!;
+        SinglePContactByEmail = [];
+        UpdatedContactByEmail = [];
+        if (StatusUpdateText.Any())
+        {
+            StatusUpdateText.RemoveAt(0);
+        }
     }
 }

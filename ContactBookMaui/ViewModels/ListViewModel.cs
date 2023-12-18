@@ -41,11 +41,6 @@ public partial class ListViewModel : ObservableObject
     {
         try
         {
-            //_contactRepository.PContactListUpdated += (sender, e) =>
-            //{
-            //    PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
-            //};
-
             PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
         }
         catch (Exception ex)

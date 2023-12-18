@@ -24,13 +24,13 @@ namespace ContactBookMaui
             builder.Services.AddSingleton<IFileServices, FileServices>();
             builder.Services.AddSingleton<IContactRepository, ContactRepository>();
 
-            //builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<ListViewModel>();
             builder.Services.AddSingleton<AddViewModel>();
             builder.Services.AddSingleton<UpdateViewModel>();
             builder.Services.AddSingleton<DeleteViewModel>();
 
-            //builder.Services.AddScoped<ContactMainPage>();
+            builder.Services.AddScoped<ContactMainPage>();
             builder.Services.AddScoped<ContactListPage>();
             builder.Services.AddTransient<ContactAddPage>();
             builder.Services.AddTransient<ContactUpdatePage>();

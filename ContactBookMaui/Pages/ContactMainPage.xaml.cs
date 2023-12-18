@@ -8,6 +8,5 @@ public partial class ContactMainPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-		//viewModel.UpdateContactList();
     }
 }

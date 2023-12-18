@@ -13,7 +13,7 @@
         {
             var window = base.CreateWindow(activationState);
 
-            const int newWidth = 680;
+            const int newWidth = 700;
             const int newHeight = 800;
 
             //Sets initial width and height of window - but is resizable
