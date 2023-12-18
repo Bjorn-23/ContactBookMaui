@@ -31,7 +31,7 @@ public partial class MainViewModel : ObservableObject
     private ObservableCollection<IPContact> _updatedContactByEmail = [];
 
     [ObservableProperty]
-    private ObservableCollection<string> _willUpdateToText = new ObservableCollection<string>();
+    private ObservableCollection<string> _statusUpdateText = new ObservableCollection<string>();
 
     [RelayCommand]
     public void AddContactToList()
@@ -73,7 +73,7 @@ public partial class MainViewModel : ObservableObject
                 var result = _contactRepository.DeleteContactByEmail(contactToDelete);
                 if (result)
                 {
-                    WillUpdateToText.Add(displayText);
+                    StatusUpdateText.Add(displayText);
                     UpdateContactList();
                 }
             }
@@ -93,7 +93,7 @@ public partial class MainViewModel : ObservableObject
                 var result = _contactRepository.UpdateContactToListByEmail((IPContact)contactToDelete, updatedContact);
                 if (result)
                 {
-                    WillUpdateToText.Add(textToAdd);
+                    StatusUpdateText.Add(textToAdd);
                     UpdatedContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(updatedContact).Select(contact => contact).ToList()) ?? [];
                     UpdateContactList();
                     RegistrationForm = new();
@@ -115,7 +115,7 @@ public partial class MainViewModel : ObservableObject
                 {
                     SinglePContactByEmail = [];
                     UpdatedContactByEmail = [];
-                    WillUpdateToText.RemoveAt(0);
+                    StatusUpdateText.RemoveAt(0);
                     ErrorOnUpDateAlert("2");
 
                 }
@@ -124,7 +124,7 @@ public partial class MainViewModel : ObservableObject
             {
                 SinglePContactByEmail = [];
                 UpdatedContactByEmail = [];
-                WillUpdateToText.RemoveAt(0);
+                StatusUpdateText.RemoveAt(0);
                 ErrorOnUpDateAlert("1");
 
             }

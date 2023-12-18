@@ -16,6 +16,9 @@ public class ContactRepository : IContactRepository
     private readonly IFileServices? _fileService;
 
     private readonly string _filePath = (@"d:\projectFiles\Contacts.json");
+
+    public event EventHandler? PContactListUpdated;
+
     public ContactRepository(IFileServices fileServices)
     {
         _fileService = fileServices;
@@ -42,6 +45,7 @@ public class ContactRepository : IContactRepository
                 {
                     _contactList.Add(contact);
                     _fileService.WriteToFile(_contactList, _filePath);
+                    PContactListUpdated?.Invoke(this, EventArgs.Empty);
                     return true;
                 }
             }
@@ -110,6 +114,7 @@ public class ContactRepository : IContactRepository
             {
                 _contactList.Remove(contactToDelete);
                 var result = _fileService.WriteToFile(_contactList, _filePath);
+                PContactListUpdated?.Invoke(this, EventArgs.Empty);
                 return result;
             }
         }

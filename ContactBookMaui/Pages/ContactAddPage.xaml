@@ -4,12 +4,11 @@
              x:Class="ContactBookMaui.Pages.ContactAddPage"
              
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
-             x:DataType="{x:Type viewmodel:MainViewModel}"
+             x:DataType="{x:Type viewmodel:AddViewModel}"
              
              Title="Contact Add Page">
     
     <VerticalStackLayout Margin="15">
-        <!--<Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}" Margin="0,0,0,15"/>-->
         <Label Text="Type in details for new contact" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
        
         <Label Text="First Name" Margin="10,15,0,5" />

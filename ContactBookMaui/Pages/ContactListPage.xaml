@@ -5,7 +5,7 @@
              
              xmlns:models="clr-namespace:ContactBook_Shared.Models;assembly=ContactBook_Shared"
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
-             x:DataType="{x:Type viewmodel:MainViewModel}"
+             x:DataType="{x:Type viewmodel:ListViewModel}"
              
              Title="Contact List Page">
 
@@ -14,7 +14,6 @@
         <VerticalStackLayout Margin="15">
             <Grid RowDefinitions="auto, auto, *">
 
-                <!--<Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}" Margin="0,0,0,15"/>-->
                 <Label Grid.Row="0" Text="All contacts in list:" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
 
                 <CollectionView Grid.Row="1" ItemsSource="{Binding PContactList}" Margin="0,30,15,0">
@@ -35,7 +34,7 @@
 
                                 <Button Grid.Column="2" Text="X"
                                         CommandParameter="{Binding .}"
-                                        Command="{Binding Path=RemoveContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}" />
+                                        Command="{Binding Path=RemoveContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:ListViewModel}}}" />
 
                             </Grid>
 
