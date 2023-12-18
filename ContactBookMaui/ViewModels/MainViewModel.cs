@@ -61,6 +61,26 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
+    public void RemoveContactByEmail()
+    {
+        if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
+        {
+            IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
+            string displayText = "Has been deleted.";
+
+            if (contactToDelete != null)
+            {
+                var result = _contactRepository.DeleteContactByEmail(contactToDelete);
+                if (result)
+                {
+                    WillUpdateToText.Add(displayText);
+                    UpdateContactList();
+                }
+            }
+        }
+    }
+
+    [RelayCommand]
     public void UpdateContactButton(PContact updatedContact)
     {
         if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
@@ -118,25 +138,25 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private async Task NavigateToAddContact()
     {
-        await Shell.Current.GoToAsync("ContactAddPage");
+        await Shell.Current.GoToAsync("//ContactAddPage");
     }
 
     [RelayCommand]
     private async Task NavigateToListContact()
     {
-        await Shell.Current.GoToAsync("ContactListPage");
+        await Shell.Current.GoToAsync("//ContactListPage");
     }
 
     [RelayCommand]
     private async Task NavigateToUpdateContact()
     {
-        await Shell.Current.GoToAsync("ContactUpdatePage");
+        await Shell.Current.GoToAsync("//ContactUpdatePage");
     }
 
     [RelayCommand]
     private async Task NavigateToDeleteContact()
     {
-        await Shell.Current.GoToAsync("ContactDeletePage");
+        await Shell.Current.GoToAsync("//ContactDeletePage");
     }
 
     [RelayCommand]
