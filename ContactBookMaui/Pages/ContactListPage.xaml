@@ -34,11 +34,11 @@
 
                                 <Button Grid.Column="1" Text="Edit"
                                         CommandParameter="{Binding .}"
-                                        Command="{Binding Path=NavigateToAddContactCommand, Source={RelativeSource AncestorType={x:Type viewmodel:ListViewModel}}}" />
+                                        Command="{Binding Path=NavigateToUpdateContactCommand, Source={RelativeSource AncestorType={x:Type viewmodel:ListViewModel}}}" />
                                 
                                 <Button Grid.Column="2" Text="X"
                                         CommandParameter="{Binding .}"
-                                        Command="{Binding Path=RemoveContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:ListViewModel}}}" />
+                                        Command="{Binding Path=NavigateToDeleteContactCommand, Source={RelativeSource AncestorType={x:Type viewmodel:ListViewModel}}}" />
 
                             </Grid>
 

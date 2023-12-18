@@ -26,6 +26,9 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     private PContact _registrationForm = new();
 
     [ObservableProperty]
+    private PContact _emailOfContactToUpdateOrDelete = new();
+
+    [ObservableProperty]
     private ObservableCollection<IPContact> _pContactList = [];
 
     [ObservableProperty]
@@ -38,15 +41,13 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     private ObservableCollection<string> _statusUpdateText = new ObservableCollection<string>();
 
     [RelayCommand]
-    public void GetContactByEmailButton(PContact contactToUpdate)
+    public void GetContactByEmailButton(IPContact contactToUpdate)
     {
         try
         {
             if (!string.IsNullOrWhiteSpace(contactToUpdate.Email))
-            {
-                
+            {                
                 SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList()) ?? [];
-                RegistrationForm = contactToUpdate;
                 UpdatedContactByEmail = [];
                 if (StatusUpdateText.Any())
                 {
@@ -119,7 +120,10 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
             Debug.WriteLine(ex.Message);
         }
     }
-
+    /// <summary>
+    /// Sets 
+    /// </summary>
+    /// <param name="query"></param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         var contactToUpdate = (query["PContact"] as PContact)!;
@@ -131,6 +135,7 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     {
         SinglePContactByEmail = [];
         UpdatedContactByEmail = [];
+        RegistrationForm = new();
         if (StatusUpdateText.Any())
         {
             StatusUpdateText.RemoveAt(0);

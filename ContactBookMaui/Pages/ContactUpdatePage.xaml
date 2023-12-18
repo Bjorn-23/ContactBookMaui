@@ -16,9 +16,9 @@
                 <VerticalStackLayout Grid.Row="0">                    
 
                     <Label Text="Type email of contact to update:" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
-                    <Entry Text="{Binding RegistrationForm.Email}"/>
+                    <Entry Text="{Binding EmailOfContactToUpdateOrDelete.Email}"/>
 
-                    <Button Text="Get Contact To Update" CommandParameter="{Binding RegistrationForm}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:UpdateViewModel}}}" Margin="0,15"/>
+                    <Button Text="Get Contact To Update" CommandParameter="{Binding EmailOfContactToUpdateOrDelete}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:UpdateViewModel}}}" Margin="0,15"/>
                 </VerticalStackLayout>
 
                 <Grid Grid.Row="1" ColumnDefinitions="*, auto, *">

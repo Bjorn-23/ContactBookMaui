@@ -37,8 +37,10 @@ public partial class ListViewModel : ObservableObject
         }
     }
 
+
+
     [RelayCommand]
-    public async Task NavigateToAddContact(IPContact contactToUpdate)
+    public async Task NavigateToUpdateContact(IPContact contactToUpdate)
     {
         var parameters = new ShellNavigationQueryParameters
         {
@@ -46,6 +48,17 @@ public partial class ListViewModel : ObservableObject
         };
 
         await Shell.Current.GoToAsync("//ContactUpdatePage", parameters);
+    }
+
+    [RelayCommand]
+    public async Task NavigateToDeleteContact(IPContact contactToDelete)
+    {
+        var parameters = new ShellNavigationQueryParameters
+        {
+            {"PContact", contactToDelete }
+        };
+
+        await Shell.Current.GoToAsync("//ContactDeletePage", parameters);
     }
 
     public void UpdateContactList()

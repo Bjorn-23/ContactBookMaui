@@ -26,6 +26,9 @@ public partial class DeleteViewModel : ObservableObject, IQueryAttributable
     private PContact _registrationForm = new();
 
     [ObservableProperty]
+    private PContact _emailOfContactToUpdateOrDelete = new();
+
+    [ObservableProperty]
     private ObservableCollection<IPContact> _pContactList = [];
 
     [ObservableProperty]
@@ -120,12 +123,15 @@ public partial class DeleteViewModel : ObservableObject, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        RegistrationForm = (query["PContact"] as PContact)!;
+        var contactToDelete = (query["PContact"] as PContact)!;
+        GetContactByEmailButton(contactToDelete);
+        RegistrationForm = contactToDelete;
     }
 
     private void ClearDataOnScreen()
     {
         SinglePContactByEmail = [];
+        RegistrationForm = new();
         if (StatusUpdateText.Any())
         {
             StatusUpdateText.RemoveAt(0);

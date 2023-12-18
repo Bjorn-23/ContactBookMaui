@@ -14,9 +14,9 @@
                 
                 <VerticalStackLayout Grid.Row="0">
                         <Label Text="Type in email of contact to delete" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
-                        <Entry Text="{Binding RegistrationForm.Email}"/>
+                    <Entry Text="{Binding EmailOfContactToUpdateOrDelete.Email}"/>
 
-                    <Button Text="Get Contact To Delete" CommandParameter="{Binding RegistrationForm}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:DeleteViewModel}}}" Margin="0,15"/>                
+                    <Button Text="Get Contact To Delete" CommandParameter="{Binding EmailOfContactToUpdateOrDelete}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:DeleteViewModel}}}" Margin="0,15"/>                
                 </VerticalStackLayout>            
 
 
