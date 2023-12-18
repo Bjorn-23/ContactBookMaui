@@ -8,13 +8,17 @@ using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
 
-public partial class UpdateViewModel : ObservableObject
+public partial class UpdateViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IContactRepository _contactRepository;
 
     public UpdateViewModel(IContactRepository contactRepository)
     {
         _contactRepository = contactRepository;
+        _contactRepository.PContactListUpdated += (sender, e) =>
+        {
+            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+        };
         UpdateContactList();
     }
 
@@ -40,6 +44,7 @@ public partial class UpdateViewModel : ObservableObject
         {
             if (contactToUpdate.Email != null!)
             {
+                StatusUpdateText.RemoveAt(0);
                 SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList()) ?? [];
                 UpdatedContactByEmail = [];
                 if (SinglePContactByEmail.Count == 0)//if (!SinglePContactByEmail.Any())
@@ -113,5 +118,10 @@ public partial class UpdateViewModel : ObservableObject
         {
             Debug.WriteLine(ex.Message);
         }
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        RegistrationForm = (query["PContact"] as PContact)!;
     }
 }

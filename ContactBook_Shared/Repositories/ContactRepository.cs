@@ -1,4 +1,6 @@
-﻿using ContactBook_Shared.Interfaces;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
 using System.Diagnostics;
 
@@ -30,6 +32,7 @@ public class ContactRepository : IContactRepository
         if (_fileService != null)
         {
             _fileService.GetFile(_filePath);
+            //PContactListUpdated?.Invoke(this, EventArgs.Empty);
             return _contactList;
         }
         return null!;

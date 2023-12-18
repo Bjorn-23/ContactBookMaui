@@ -8,11 +8,11 @@ namespace ContactBookMaui
         {
             InitializeComponent();
 
-            Routing.RegisterRoute("ContactMainPage", typeof(ContactMainPage));
-            Routing.RegisterRoute("ContactListPage", typeof(ContactListPage));
-            Routing.RegisterRoute("ContactAddPage", typeof(ContactAddPage));
-            Routing.RegisterRoute("ContactUpdatePage", typeof(ContactUpdatePage));
-            Routing.RegisterRoute("ContactDeletePage", typeof(ContactDeletePage));
+            Routing.RegisterRoute(nameof(ContactMainPage), typeof(ContactMainPage));
+            Routing.RegisterRoute(nameof(ContactListPage), typeof(ContactListPage));
+            Routing.RegisterRoute(nameof(ContactAddPage), typeof(ContactAddPage));
+            Routing.RegisterRoute(nameof(ContactUpdatePage), typeof(ContactUpdatePage));
+            Routing.RegisterRoute(nameof(ContactDeletePage), typeof(ContactDeletePage));
 
         }
     }

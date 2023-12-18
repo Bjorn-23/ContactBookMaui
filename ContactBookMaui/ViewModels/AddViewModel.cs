@@ -33,6 +33,7 @@ public partial class AddViewModel : ObservableObject
             {
                 UpdateContactList();
                 RegistrationForm = new();
+
             }
         }
     }

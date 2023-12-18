@@ -45,4 +45,7 @@ public interface IContactRepository
     /// <param name="contactToDelete"></param>
     /// <returns></returns>
     //bool RemoveCustomerFromList(IPContact contactToDelete);
+
+    //
+    public event EventHandler? PContactListUpdated;
 }

@@ -8,5 +8,6 @@ public partial class ContactListPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+        //viewModel.UpdateContactList();
+    }
 }

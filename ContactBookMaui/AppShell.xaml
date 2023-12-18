@@ -12,7 +12,7 @@
     Title="ContactBookMaui">
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">        
-        <ShellContent Title="Contact Main" Route="ContactMainPage" ContentTemplate="{DataTemplate pages:ContactMainPage}" />
+        <!--<ShellContent Title="Contact Main" Route="ContactMainPage" ContentTemplate="{DataTemplate pages:ContactMainPage}" />-->
         <ShellContent Title="Contact List" Route="ContactListPage" ContentTemplate="{DataTemplate pages:ContactListPage}" />
         <ShellContent Title="Add Contact" Route="ContactAddPage" ContentTemplate="{DataTemplate pages:ContactAddPage}" />
         <ShellContent Title="Update Contact" Route="ContactUpdatePage" ContentTemplate="{DataTemplate pages:ContactUpdatePage}" />
