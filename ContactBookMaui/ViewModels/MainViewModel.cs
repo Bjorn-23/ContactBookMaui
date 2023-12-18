@@ -15,6 +15,10 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel(IContactRepository contactRepository)
     {
         _contactRepository = contactRepository;
+        _contactRepository.PContactListUpdated += (sender, e) =>
+        {
+            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+        };
         UpdateContactList();
     }
 

@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
 
-public partial class DeleteViewModel : ObservableObject//, IQueryAttributable
+public partial class DeleteViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IContactRepository _contactRepository;
 
@@ -118,10 +118,10 @@ public partial class DeleteViewModel : ObservableObject//, IQueryAttributable
         }
     }
 
-    //public void ApplyQueryAttributes(IDictionary<string, object> query)
-    //{
-    //    RegistrationForm = (query["PContact"] as PContact)!;
-    //}
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        RegistrationForm = (query["PContact"] as PContact)!;
+    }
 
     private void ClearDataOnScreen()
     {

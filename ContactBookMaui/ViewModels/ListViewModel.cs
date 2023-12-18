@@ -37,6 +37,17 @@ public partial class ListViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    public async Task NavigateToAddContact(IPContact contactToUpdate)
+    {
+        var parameters = new ShellNavigationQueryParameters
+        {
+            {"PContact", contactToUpdate }
+        };
+
+        await Shell.Current.GoToAsync("//ContactUpdatePage", parameters);
+    }
+
     public void UpdateContactList()
     {
         try

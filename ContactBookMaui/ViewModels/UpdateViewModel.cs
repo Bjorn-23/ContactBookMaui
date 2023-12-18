@@ -8,17 +8,17 @@ using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
 
-public partial class UpdateViewModel : ObservableObject//, IQueryAttributable
+public partial class UpdateViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IContactRepository _contactRepository;
 
     public UpdateViewModel(IContactRepository contactRepository)
     {
         _contactRepository = contactRepository;
-        //_contactRepository.PContactListUpdated += (sender, e) =>
-        //{
-        //    PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
-        //};
+        _contactRepository.PContactListUpdated += (sender, e) =>
+        {
+            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+        };
         UpdateContactList();
     }
 
@@ -38,7 +38,7 @@ public partial class UpdateViewModel : ObservableObject//, IQueryAttributable
     private ObservableCollection<string> _statusUpdateText = new ObservableCollection<string>();
 
     [RelayCommand]
-    public void GetContactByEmailButton(IPContact contactToUpdate)
+    public void GetContactByEmailButton(PContact contactToUpdate)
     {
         try
         {
@@ -46,6 +46,7 @@ public partial class UpdateViewModel : ObservableObject//, IQueryAttributable
             {
                 
                 SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList()) ?? [];
+                RegistrationForm = contactToUpdate;
                 UpdatedContactByEmail = [];
                 if (StatusUpdateText.Any())
                 {
@@ -119,10 +120,12 @@ public partial class UpdateViewModel : ObservableObject//, IQueryAttributable
         }
     }
 
-    //public void ApplyQueryAttributes(IDictionary<string, object> query)
-    //{
-    //    RegistrationForm = (query["PContact"] as PContact)!;
-    //}
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        var contactToUpdate = (query["PContact"] as PContact)!;
+        GetContactByEmailButton(contactToUpdate);
+        RegistrationForm = contactToUpdate;
+    }
 
     private void ClearDataOnScreen()
     {

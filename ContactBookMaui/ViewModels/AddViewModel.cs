@@ -55,6 +55,4 @@ public partial class AddViewModel : ObservableObject
             Debug.WriteLine(ex.Message);
         }
     }
-
-
 }
