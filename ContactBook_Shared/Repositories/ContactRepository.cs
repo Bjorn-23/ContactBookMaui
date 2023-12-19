@@ -1,4 +1,6 @@
-﻿using ContactBook_Shared.Interfaces;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
 using System.Diagnostics;
 
@@ -16,6 +18,9 @@ public class ContactRepository : IContactRepository
     private readonly IFileServices? _fileService;
 
     private readonly string _filePath = (@"d:\projectFiles\Contacts.json");
+
+    public event EventHandler? PContactListUpdated;
+
     public ContactRepository(IFileServices fileServices)
     {
         _fileService = fileServices;
@@ -42,6 +47,7 @@ public class ContactRepository : IContactRepository
                 {
                     _contactList.Add(contact);
                     _fileService.WriteToFile(_contactList, _filePath);
+                    PContactListUpdated?.Invoke(this, EventArgs.Empty);
                     return true;
                 }
             }
@@ -61,7 +67,7 @@ public class ContactRepository : IContactRepository
             {
                 foreach (var existingContact in _contactList)
                 {
-                    if (existingContact.Email.Equals(contact.Email, StringComparison.CurrentCultureIgnoreCase))   // if (existingContact.Email.ToLower() == contact.Email.ToLower())
+                    if (existingContact.Email.Equals(contact.Email, StringComparison.CurrentCultureIgnoreCase))
                     {
                         return new List<IPContact> { existingContact };
                     }
@@ -110,6 +116,7 @@ public class ContactRepository : IContactRepository
             {
                 _contactList.Remove(contactToDelete);
                 var result = _fileService.WriteToFile(_contactList, _filePath);
+                PContactListUpdated?.Invoke(this, EventArgs.Empty);
                 return result;
             }
         }

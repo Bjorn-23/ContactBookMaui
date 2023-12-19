@@ -172,7 +172,7 @@ public class MenuServices : IMenuServices
                     Console.Write("\n(y/n) ");
                     string answer = Console.ReadLine()!;
 
-                    if (answer.ToLower() == "y")
+                    if (answer.Equals("y", StringComparison.CurrentCultureIgnoreCase))
                     {
                         PContact updatedContact = new PContact();
 

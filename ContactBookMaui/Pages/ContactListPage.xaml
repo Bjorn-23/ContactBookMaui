@@ -5,7 +5,7 @@
              
              xmlns:models="clr-namespace:ContactBook_Shared.Models;assembly=ContactBook_Shared"
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
-             x:DataType="{x:Type viewmodel:MainViewModel}"
+             x:DataType="{x:Type viewmodel:ListViewModel}"
              
              Title="Contact List Page">
 
@@ -14,14 +14,13 @@
         <VerticalStackLayout Margin="15">
             <Grid RowDefinitions="auto, auto, *">
 
-                <!--<Button Text="Nav - Go Back" Command="{Binding NavigateBackCommand}" Margin="0,0,0,15"/>-->
                 <Label Grid.Row="0" Text="All contacts in list:" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
 
                 <CollectionView Grid.Row="1" ItemsSource="{Binding PContactList}" Margin="0,30,15,0">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="{x:Type models:PContact}">
 
-                            <Grid ColumnDefinitions="*, auto" Margin="0,0,0,15">
+                            <Grid ColumnDefinitions="*, auto, auto" Margin="0,0,0,15" >
 
                                 <VerticalStackLayout Grid.Column="0" Margin="15,0">
                                     <Label Text="{Binding FullName}" />
@@ -33,9 +32,13 @@
                                 <!--Need to refactor update function to take Email as a part of URI and go to "details-section" of the GetcontactFromListByEmail and be able to update straight away from there-->
                                 <!--<Button Grid.Column="1" Text="Edit" CommandParameter="{Binding Email}" Command="{Binding NavigateToUpdateContactCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}" />-->
 
-                                <Button Grid.Column="2" Text="X"
+                                <Button Grid.Column="1" Text="Edit" FontSize="16" BackgroundColor="#34B33A" Margin="0,5,5,5"
                                         CommandParameter="{Binding .}"
-                                        Command="{Binding Path=RemoveContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}}" />
+                                        Command="{Binding Path=NavigateToUpdateContactCommand, Source={RelativeSource AncestorType={x:Type viewmodel:ListViewModel}}}" />
+
+                                <Button Grid.Column="2" Text="X" FontSize="16" BackgroundColor="#E52B1D" Margin="0,5,5,5" Padding="18"
+                                        CommandParameter="{Binding .}"
+                                        Command="{Binding Path=NavigateToDeleteContactCommand, Source={RelativeSource AncestorType={x:Type viewmodel:ListViewModel}}}" />
 
                             </Grid>
 

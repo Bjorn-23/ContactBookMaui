@@ -9,12 +9,17 @@
             MainPage = new AppShell();
         }
 
+        /// <summary>
+        /// Sets Initial height and static width of Application.
+        /// </summary>
+        /// <param name="activationState"></param>
+        /// <returns></returns>
         protected override Window CreateWindow(IActivationState activationState)
         {
             var window = base.CreateWindow(activationState);
 
-            const int newWidth = 680;
-            const int newHeight = 800;
+            const int newWidth = 700;
+            const int newHeight = 900;
 
             //Sets initial width and height of window - but is resizable
             //window.Width = newWidth;

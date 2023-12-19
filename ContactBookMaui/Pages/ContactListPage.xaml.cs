@@ -4,9 +4,9 @@ namespace ContactBookMaui.Pages;
 
 public partial class ContactListPage : ContentPage
 {
-	public ContactListPage(MainViewModel viewModel)
+	public ContactListPage(ListViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+    }
 }
