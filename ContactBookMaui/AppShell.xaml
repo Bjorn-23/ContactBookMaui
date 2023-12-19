@@ -18,21 +18,5 @@
         <ShellContent Title="Update Contact" Route="ContactUpdatePage" ContentTemplate="{DataTemplate pages:ContactUpdatePage}" />
         <ShellContent Title="Delete Contact" Route="ContactDeletePage" ContentTemplate="{DataTemplate pages:ContactDeletePage}" />        
     </FlyoutItem>
-    
-    <!--<FlyoutItem>
-        <ShellContent Title="Contact List" Route="ContactListPage" ContentTemplate="{DataTemplate pages:ContactListPage}" />
-    </FlyoutItem>
-    
-    <FlyoutItem>
-        <ShellContent Title="Add Contact" Route="ContactAddPage" ContentTemplate="{DataTemplate pages:ContactAddPage}" />
-    </FlyoutItem>
-    
-    <FlyoutItem>
-        <ShellContent Title="Update Contact" Route="ContactUpdatePage" ContentTemplate="{DataTemplate pages:ContactUpdatePage}" />
-    </FlyoutItem>
-    
-    <FlyoutItem>
-        <ShellContent Title="Delete Contact" Route="ContactDeletePage" ContentTemplate="{DataTemplate pages:ContactDeletePage}" />
-    </FlyoutItem>-->
 
 </Shell>

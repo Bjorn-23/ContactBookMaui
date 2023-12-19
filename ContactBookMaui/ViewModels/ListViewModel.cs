@@ -27,21 +27,6 @@ public partial class ListViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<IPContact> _pContactList = [];
 
-
-    //[RelayCommand]
-    //public void RemoveContactButton(IPContact contactToDelete)
-    //{
-    //    if (contactToDelete != null)
-    //    {
-    //        var result = _contactRepository.DeleteContactByEmail(contactToDelete);
-    //        if (result)
-    //        {
-    //            UpdateContactList();
-    //        }
-    //    }
-    //}
-
-
     /// <summary>
     /// Passes information from the (PContact) associated with the "Edit" button pressed to (ContactUpdatedPage) and navigates there
     /// </summary>

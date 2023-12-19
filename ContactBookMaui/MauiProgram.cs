@@ -30,11 +30,18 @@ namespace ContactBookMaui
             builder.Services.AddSingleton<UpdateViewModel>();
             builder.Services.AddSingleton<DeleteViewModel>();
 
-            builder.Services.AddScoped<ContactMainPage>();
-            builder.Services.AddScoped<ContactListPage>();
-            builder.Services.AddTransient<ContactAddPage>();
-            builder.Services.AddTransient<ContactUpdatePage>();
-            builder.Services.AddTransient<ContactDeletePage>();
+            builder.Services.AddSingleton<ContactMainPage>();
+            builder.Services.AddSingleton<ContactListPage>();
+            builder.Services.AddSingleton<ContactAddPage>();
+            builder.Services.AddSingleton<ContactUpdatePage>();
+            builder.Services.AddSingleton<ContactDeletePage>();
+
+            // Do I have any need for changing these from AddSingleton? Makes no different for testing...
+            //builder.Services.AddScoped<ContactMainPage>();
+            //builder.Services.AddScoped<ContactListPage>();
+            //builder.Services.AddTransient<ContactAddPage>();
+            //builder.Services.AddTransient<ContactUpdatePage>();
+            //builder.Services.AddTransient<ContactDeletePage>();
 
             return builder.Build();
         }

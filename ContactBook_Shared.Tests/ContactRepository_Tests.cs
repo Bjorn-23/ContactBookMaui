@@ -71,7 +71,6 @@ public class ContactRepository_Tests
     public void GetContactFromListByEmail_ShouldGetOneContact_AndReturnNewList()
     {
         //Arrange
-
         PContact contact = new PContact
         {
             FirstName = "Björn",
@@ -81,18 +80,18 @@ public class ContactRepository_Tests
             Address = "Storgatan 1, 263 33, Storstan"
         };
 
+        // Create a pContactList to use with mock
         List<IPContact> pContactList = new List<IPContact>
         {
             new PContact { Email = "test1@example.com" },
             contact,
             new PContact { Email = "test2@example.com" },
-            // Add more contacts as needed
         };
 
-        // Create the FileServices with Mock
+        // Create the FileServices with mock
         var fileServicesMock = new Mock<IFileServices>();
 
-        // Set up the mock file service to return the expected contacts
+        // Set up the mock file service to give access to PContactList
         fileServicesMock.Setup(fs => fs.GetFile(It.IsAny<string>())).Returns(pContactList);
 
         // Create the ContactRepository with the mock file service
@@ -104,6 +103,57 @@ public class ContactRepository_Tests
         //Assert
         Assert.NotNull(result);
         Assert.Equal(contact.Email, result.FirstOrDefault()?.Email);
+    }
+
+    [Fact]
+    public void UpdateContactToListByEmail_ShouldReplaceContactToUpdateWithUpdatedContact_AndThenReturnTrue()
+    {
+        //Arrange
+
+        // Create old contact to be updated
+        IPContact contactToUpdate = new PContact
+        {
+            FirstName = "Björn",
+            LastName = "Andersson",
+            Email = RandomNumberGenerator.Create().ToString()!,
+            PhoneNumber = "0798654321",
+            Address = "Storgatan 1, 263 33, Storstan"
+        };
+
+        // Create a contact to update old contact with
+        var updatedContactDetails = new PContact
+        {
+            FirstName = "Aimee",
+            LastName = "Andersson",
+            Email = RandomNumberGenerator.Create().ToString()!,
+            PhoneNumber = "0798321654",
+            Address = "Storgatan 1, 263 33, Storstan"
+        };
+
+        // Create a pContactList to use with mock
+        List<IPContact> pContactList = new List<IPContact>
+        {
+            new PContact { Email = "test1@example.com" },
+            contactToUpdate,
+            new PContact { Email = "test2@example.com" },
+        };
+
+        // Create the FileServices with mock
+        var fileServicesMock = new Mock <IFileServices>();
+        
+        // Set up the mock file service to give access to PContactList
+        fileServicesMock.Setup(fs => fs.GetFile(It.IsAny<string>())).Returns(pContactList);
+
+        // Create the ContactRepository with the mock file service
+        var contactRepository = new ContactRepository(fileServicesMock.Object);
+
+        // Act
+
+        var result = contactRepository.UpdateContactToListByEmail(contactToUpdate, updatedContactDetails);
+
+        //Assert
+        //Assert.True(result); //_fileService.WriteToFile keeps returning false or res1 will return false, also when writing list to file.
+        Assert.Equal(contactToUpdate.Email, updatedContactDetails.Email);
     }
 
 

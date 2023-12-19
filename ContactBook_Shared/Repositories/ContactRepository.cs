@@ -95,13 +95,19 @@ public class ContactRepository : IContactRepository
                 bool result = _fileService.WriteToFile(_pContactList, _filePath);
                 PContactListUpdated?.Invoke(this, EventArgs.Empty);
 
-                //var res1 = DeleteContactByEmail(contactToUpdate);
-                //var res2 = AddContactToList(updatedContactDetails);
-
-                if (result) //res1 && res2
+                if (result)
                 {
                     return true;
                 }
+
+                //var res1 = DeleteContactByEmail(contactToUpdate);
+                //var res2 = AddContactToList(updatedContactDetails);
+                //PContactListUpdated?.Invoke(this, EventArgs.Empty);
+
+                //if (res1 && res2)
+                //{
+                //    return true;
+                //}
             }
             else
                 return false;
