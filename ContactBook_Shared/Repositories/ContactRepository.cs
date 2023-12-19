@@ -74,6 +74,7 @@ public class ContactRepository : IContactRepository
                 }
             }
             else
+                //return new List<IPContact>();
                 return null!;
         }
         catch (Exception ex)
