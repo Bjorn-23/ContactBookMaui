@@ -13,7 +13,7 @@ public class ContactRepository : IContactRepository
     {
     }
 
-    private List<IPContact> _contactList = [];
+    private List<IPContact> _pContactList = [];
 
     private readonly IFileServices? _fileService;
 
@@ -24,7 +24,7 @@ public class ContactRepository : IContactRepository
     public ContactRepository(IFileServices fileServices)
     {
         _fileService = fileServices;
-        _contactList = (List<IPContact>)_fileService.GetFile(_filePath);
+        _pContactList = (List<IPContact>)_fileService.GetFile(_filePath);
     }
 
     public IEnumerable<IPContact> GetAllContactsFromList()
@@ -32,7 +32,7 @@ public class ContactRepository : IContactRepository
         if (_fileService != null)
         {
             _fileService.GetFile(_filePath);
-            return _contactList;
+            return _pContactList;
         }
         return null!;
     }
@@ -43,10 +43,10 @@ public class ContactRepository : IContactRepository
         {
             if (_fileService != null && contact.Email != "" && contact.FirstName != "")
             {
-                if (!_contactList.Any(x => x.Email == contact.Email))
+                if (!_pContactList.Any(x => x.Email == contact.Email))
                 {
-                    _contactList.Add(contact);
-                    _fileService.WriteToFile(_contactList, _filePath);
+                    _pContactList.Add(contact);
+                    _fileService.WriteToFile(_pContactList, _filePath);
                     PContactListUpdated?.Invoke(this, EventArgs.Empty);
                     return true;
                 }
@@ -65,7 +65,7 @@ public class ContactRepository : IContactRepository
         {
             if (contact.Email != null)
             {
-                foreach (var existingContact in _contactList)
+                foreach (var existingContact in _pContactList)
                 {
                     if (existingContact.Email.Equals(contact.Email, StringComparison.CurrentCultureIgnoreCase))
                     {
@@ -84,16 +84,20 @@ public class ContactRepository : IContactRepository
         return [];
     }
 
-    public bool UpdateContactToListByEmail(IPContact contactToDelete, PContact updatedContact)
+    public bool UpdateContactToListByEmail(IPContact contactToUpdate, PContact updatedContactDetails)
     {
         try
         {
-            if (updatedContact.Email != "" && updatedContact.FirstName != "")
+            if (_fileService != null && updatedContactDetails.Email != "" && updatedContactDetails.FirstName != "")
             {
-                var res1 = DeleteContactByEmail(contactToDelete);
-                var res2 = AddContactToList(updatedContact);
+                contactToUpdate = updatedContactDetails;
+                bool result = _fileService.WriteToFile(_pContactList, _filePath);
+                PContactListUpdated?.Invoke(this, EventArgs.Empty);
 
-                if (res1 && res2)
+                //var res1 = DeleteContactByEmail(contactToUpdate);
+                //var res2 = AddContactToList(updatedContactDetails);
+
+                if (result) //res1 && res2
                 {
                     return true;
                 }
@@ -112,10 +116,10 @@ public class ContactRepository : IContactRepository
     {
         try
         {
-            if (_fileService != null && _contactList.Any(x => x.Email == contactToDelete.Email))
+            if (_fileService != null && _pContactList.Any(x => x.Email == contactToDelete.Email))
             {
-                _contactList.Remove(contactToDelete);
-                var result = _fileService.WriteToFile(_contactList, _filePath);
+                _pContactList.Remove(contactToDelete);
+                var result = _fileService.WriteToFile(_pContactList, _filePath);
                 PContactListUpdated?.Invoke(this, EventArgs.Empty);
                 return result;
             }

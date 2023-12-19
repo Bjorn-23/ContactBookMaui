@@ -1,14 +1,12 @@
-﻿using ContactBook_Shared.Interfaces;
-using ContactBook_Shared.Models;
+﻿using System.Diagnostics.Contracts;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
+using ContactBook_Shared.Interfaces;
+using ContactBook_Shared.Models;
 
+namespace ContactBookConsole.Services;
 
-namespace ContactBook_Shared.Services;
-
-public class MenuServices : IMenuServices
+internal class MenuServices : IMenuServices
 {
-
     private readonly IContactRepository _contactRepository;
     public MenuServices(IContactRepository contactRepository)
     {
@@ -21,23 +19,21 @@ public class MenuServices : IMenuServices
     /// </summary>
     public void MenuStart()
     {
-
         while (true)
         {
-
             Console.Clear();
             Console.WriteLine("------Address Book 3000------");
             Console.WriteLine("-----------------------------");
             Console.WriteLine("\nPlease Choose An Option");
-            Console.WriteLine($"{"\n1.", -5} Add new Contact");
-            Console.WriteLine($"{"\n2.", -5} Show All Contacts");
-            Console.WriteLine($"{"\n3.", -5} Show Contact By Email");
-            Console.WriteLine($"{"\n4.", -5} Update Contact By Email");
-            Console.WriteLine($"{"\n5.", -5} Delete Contact By Email");
+            Console.WriteLine($"{"\n1.",-5} Add new Contact");
+            Console.WriteLine($"{"\n2.",-5} Show All Contacts");
+            Console.WriteLine($"{"\n3.",-5} Show Contact By Email");
+            Console.WriteLine($"{"\n4.",-5} Update Contact By Email");
+            Console.WriteLine($"{"\n5.",-5} Delete Contact By Email");
             Console.WriteLine($"{"\n0.",-5} Exit Application");
 
             Console.Write("\nPlease choose an option: ");
-            var answer = Console.ReadLine()?? "";
+            var answer = Console.ReadLine() ?? "";
 
             switch (answer)
             {
@@ -62,9 +58,9 @@ public class MenuServices : IMenuServices
                 default:
                     Console.WriteLine("Invalid Option. Press Any Key To Try Again.");
                     Console.ReadKey();
-                    break;  
+                    break;
             }
-            
+
             void ShowExitApplication()
             {
                 Console.Write($"\nDo You Want To Quit The Application? (y/n):\n");
@@ -117,7 +113,7 @@ public class MenuServices : IMenuServices
 
             void ShowGetAllContacts()
             {
-                var contacts = _contactRepository.GetAllContactsFromList();    
+                var contacts = _contactRepository.GetAllContactsFromList();
                 Console.Clear();
                 Console.WriteLine("----------Add Contact--------");
                 Console.WriteLine("-----------------------------");
@@ -143,7 +139,7 @@ public class MenuServices : IMenuServices
                 var result = _contactRepository.GetContactFromListByEmail(contact);
                 if (result != null)
                 {
-                var match = LoopName(result);
+                    var match = LoopName(result);
                 }
                 else
                     Console.WriteLine("\nNo Contact With That Email address.");
@@ -212,7 +208,7 @@ public class MenuServices : IMenuServices
                         Console.WriteLine($"\n{match.FirstName} {match.LastName} Will Not Be Updated.");
                     }
                     PressAnyKey();
-                }                
+                }
             }
 
             void ShowDeleteContactByEmail()
