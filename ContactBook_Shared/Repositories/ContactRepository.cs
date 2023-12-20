@@ -1,8 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using ContactBook_Shared.Interfaces;
+﻿using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
 using System.Diagnostics;
+
 
 
 namespace ContactBook_Shared.Repositories;
@@ -17,22 +16,36 @@ public class ContactRepository : IContactRepository
 
     private readonly IFileServices? _fileService;
 
-    private readonly string _filePath = (@"d:\projectFiles\Contacts.json");
+    //Old filepath - keep as backup
+    //private readonly string _filePath = (@"d:\projectFiles\Contacts.json");
+
+    // Saves the file (on my computer) to:  C:\Users\bjorn\AppData\Local\Packages\com.companyname.contactbookmaui_9zz4h110yvjzm\LocalCache\Local
+    private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Contacts.json");
+
 
     public event EventHandler? PContactListUpdated;
 
     public ContactRepository(IFileServices fileServices)
     {
         _fileService = fileServices;
-        _pContactList = (List<IPContact>)_fileService.GetFile(_filePath);
+        
+        _pContactList = _fileService.GetFile(_filePath).ToList();
     }
 
     public IEnumerable<IPContact> GetAllContactsFromList()
     {
-        if (_fileService != null)
+        try
         {
-            _fileService.GetFile(_filePath);
-            return _pContactList;
+            if (_fileService != null)
+            {
+                _fileService.GetFile(_filePath);
+                return _pContactList;
+            }
+            return null!;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
         }
         return null!;
     }
@@ -92,7 +105,7 @@ public class ContactRepository : IContactRepository
             if (_fileService != null && updatedContactDetails.Email != "" && updatedContactDetails.FirstName != "")
             {
                 contactToUpdate = updatedContactDetails;
-                bool result = _fileService.WriteToFile(_pContactList, _filePath);
+                bool result = _fileService!.WriteToFile(_pContactList, _filePath);
                 PContactListUpdated?.Invoke(this, EventArgs.Empty);
 
                 if (result)
@@ -123,13 +136,13 @@ public class ContactRepository : IContactRepository
     {
         try
         {
-            if (_fileService != null && _pContactList.Any(x => x.Email == contactToDelete.Email))
+            _pContactList.Remove(contactToDelete);
+            var result = _fileService!.WriteToFile(_pContactList, _filePath);
+            if (result)
             {
-                _pContactList.Remove(contactToDelete);
-                var result = _fileService.WriteToFile(_pContactList, _filePath);
                 PContactListUpdated?.Invoke(this, EventArgs.Empty);
-                return result;
-            }
+                return true;
+            } 
         }
         catch (Exception ex)
         {

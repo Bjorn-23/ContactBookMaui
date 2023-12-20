@@ -19,10 +19,10 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     public UpdateViewModel(IContactRepository contactRepository)
     {
         _contactRepository = contactRepository;
-        _contactRepository.PContactListUpdated += (sender, e) =>
-        {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
-        };
+        //_contactRepository.PContactListUpdated += (sender, e) =>
+        //{
+        //    PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+        //};
         UpdateContactList();
     }
     /// <summary>
@@ -48,6 +48,8 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     /// </summary>
     [ObservableProperty]
     private ObservableCollection<IPContact> _singlePContactByEmail = [];
+
+
 
     /// <summary>
     /// List displaying updated contact details after using (ContactUpdatePage)
@@ -107,12 +109,13 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     {
         if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
         {
-            IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
-            string textToAdd = "Has been updated to:";
+            IPContact contactToUpdate = SinglePContactByEmail.FirstOrDefault()!;
 
-            if (contactToDelete != null)
+            string textToAdd = "Has been\nupdated to:";
+
+            if (contactToUpdate != null)
             {
-                var result = _contactRepository.UpdateContactToListByEmail((IPContact)contactToDelete, updatedContact);
+                var result = _contactRepository.UpdateContactToListByEmail(contactToUpdate, updatedContact);
                 if (result)
                 {
                     StatusUpdateText.Add(textToAdd);

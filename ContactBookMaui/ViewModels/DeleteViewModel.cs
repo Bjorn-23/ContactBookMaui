@@ -94,21 +94,28 @@ public partial class DeleteViewModel : ObservableObject, IQueryAttributable
     [RelayCommand]
     public void RemoveContactByEmail()
     {
-        if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
+        try
         {
-            IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
-            string displayText = "Has been deleted.";
-
-            if (contactToDelete != null)
+            if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
             {
-                var result = _contactRepository.DeleteContactByEmail(contactToDelete);
-                if (result)
+                IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
+                string displayText = "Has been deleted.";
+
+                if (contactToDelete != null)
                 {
-                    StatusUpdateText.Add(displayText);
-                    UpdateContactList();
+                    var result = _contactRepository.DeleteContactByEmail(contactToDelete);
+                    if (result)
+                    {
+                        StatusUpdateText.Add(displayText);
+                        UpdateContactList();
+                    }
                 }
             }
         }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }        
     }
 
     /// <summary>

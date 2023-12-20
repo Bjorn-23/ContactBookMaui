@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ContactBook_Shared.Interfaces;
+using ContactBook_Shared.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -35,9 +36,18 @@ public partial class ListViewModel : ObservableObject
     [RelayCommand]
     public async Task NavigateToUpdateContact(IPContact contactToUpdate)
     {
+        IPContact contact = new PContact()
+        {
+            FirstName = contactToUpdate.FirstName,
+            LastName = contactToUpdate.LastName,
+            Email = contactToUpdate.Email,
+            Address = contactToUpdate.Address,
+            PhoneNumber = contactToUpdate.PhoneNumber,
+        };
+
         var parameters = new ShellNavigationQueryParameters
         {
-            {"PContact", contactToUpdate }
+            {"PContact", contact }
         };
 
         await Shell.Current.GoToAsync("//ContactUpdatePage", parameters);
