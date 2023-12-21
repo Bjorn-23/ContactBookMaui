@@ -179,9 +179,17 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     /// <param name="query">(PContact) data</param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        var contactToUpdate = (query["PContact"] as PContact)!;
-        GetContactByEmailButton(contactToUpdate);
-        RegistrationForm = contactToUpdate;
+        try
+        {
+            var contactToUpdate = (query["PContact"] as PContact)!;
+            GetContactByEmailButton(contactToUpdate);
+            RegistrationForm = contactToUpdate;
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
     }
 
     /// <summary>

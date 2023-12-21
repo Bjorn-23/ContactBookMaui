@@ -27,8 +27,8 @@ namespace ContactBookMaui
             builder.Services.AddSingleton<IFileServices, FileServices>();
             builder.Services.AddSingleton<IContactRepository, ContactRepository>();
 
-            builder.Services.AddSingleton<MainViewModel>();
-            builder.Services.AddSingleton<ContactMainPage>();
+            //builder.Services.AddSingleton<MainViewModel>();
+            //builder.Services.AddSingleton<ContactMainPage>();
 
             builder.Services.AddSingleton<ListViewModel>();
             builder.Services.AddSingleton<ContactListPage>();
