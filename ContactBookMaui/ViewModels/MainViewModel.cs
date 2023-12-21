@@ -10,26 +10,26 @@ namespace ContactBookMaui.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    private readonly IContactRepository _contactRepository;
+    private readonly IPContactServices _pContactServices;
 
-    public MainViewModel(IContactRepository contactRepository)
+    public MainViewModel(IPContactServices pContactServices)
     {
-        _contactRepository = contactRepository;
-        _contactRepository.PContactListUpdated += (sender, e) =>
-        {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
-        };
+        _pContactServices = pContactServices;
+        PContactList = _pContactServices.GetAllContactsFromList();
         UpdateContactList();
     }
 
     [ObservableProperty]
     private ObservableCollection<IPContact> _pContactList = [];
 
+    /// <summary>
+    /// Updates (PContactlist) in methods after that method modifies it.
+    /// </summary>
     public void UpdateContactList()
     {
         try
         {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+            PContactList = _pContactServices.GetAllContactsFromList();
         }
         catch (Exception ex)
         {

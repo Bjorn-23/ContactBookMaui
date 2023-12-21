@@ -6,6 +6,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
+internal enum ErrorCodes
+{
+    BadRequest, 
+    NotFound,
+}
 
 public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributable
 {
