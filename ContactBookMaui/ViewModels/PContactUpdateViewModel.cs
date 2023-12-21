@@ -7,11 +7,11 @@ using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
 
-public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributable
+public partial class PContactUpdateViewModel : ObservableObject
 {
     private readonly IPContactServices _pContactServices;
 
-    public PContactDeleteViewModel(IPContactServices pContactServices)
+    public PContactUpdateViewModel(IPContactServices pContactServices)
     {
         _pContactServices = pContactServices;
         _pContactServices.PContactListUpdated += (sender, e) =>
@@ -20,7 +20,6 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
         };
         UpdateContactList();
     }
-
     /// <summary>
     /// Form for filling in new details via (ContactAddPage )or edit details on (ContactUpdatePage)
     /// </summary>
@@ -46,6 +45,12 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
     private ObservableCollection<IPContact> _singlePContactByEmail = [];
 
     /// <summary>
+    /// List displaying updated contact details after using (ContactUpdatePage)
+    /// </summary>
+    [ObservableProperty]
+    private ObservableCollection<IPContact> _updatedContactByEmail = [];
+
+    /// <summary>
     /// List displaying a custom text after updating a contact or deleting a contact.
     /// </summary>
     [ObservableProperty]
@@ -63,7 +68,7 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
             if (!string.IsNullOrWhiteSpace(contactToUpdate.Email))
             {
                 SinglePContactByEmail = _pContactServices.GetContactFromListByEmail(contactToUpdate);
-
+                UpdatedContactByEmail = [];
                 if (StatusUpdateText.Any())
                 {
                     StatusUpdateText.RemoveAt(0);
@@ -88,37 +93,34 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
     }
 
     /// <summary>
-    /// /// Sends (contactToDelete = SinglePContact) to the method (DeleteContactByEmail) to remove it from the List.
+    /// Sends (contactToDelete = SinglePContact) and (updatedContact = _registrationForm) to the method (UpdateContactToListByEmail)
     /// </summary>
+    /// <param name="updatedContact">Input parameters from (RegistrationForm)</param>
     [RelayCommand]
-    public void RemoveContactByEmail()
+    public void UpdateContactButton(PContact updatedContact)
     {
-        try
+        if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
         {
-            if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
-            {
-                IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
-                string displayText = "Has been deleted.";
+            IPContact contactToUpdate = SinglePContactByEmail.FirstOrDefault()!;
 
-                if (contactToDelete != null)
+            string textToAdd = "Updated To:";
+
+            if (contactToUpdate != null)
+            {
+                var result = _pContactServices.UpdateContactToListByEmail(contactToUpdate, updatedContact);
+                if (result)
                 {
-                    var result = _pContactServices.DeleteContactByEmail(contactToDelete);
-                    if (result)
-                    {
-                        StatusUpdateText.Add(displayText);
-                        UpdateContactList();
-                    }
+                    StatusUpdateText.Add(textToAdd);
+                    UpdatedContactByEmail = _pContactServices.GetContactFromListByEmail(updatedContact);
+                    UpdateContactList();
+                    RegistrationForm = new();
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
         }
     }
 
     /// <summary>
-    /// Cancels deleting contact and returns to (ContactListPage)
+    /// Cancels updating contact and returns to (ContactListPage)
     /// </summary>
     /// <returns></returns>
     [RelayCommand]
@@ -128,9 +130,11 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
         await Shell.Current.GoToAsync("//ContactListPage");
     }
 
+
     /// <summary>
     /// Displays error messages when (GetContactByEmailButton) has wrong or missing input
     /// </summary>
+    /// <param name="errorCode">Enums representing error message in a clear way.</param>
     private async void ErrorOnUpDateAlert(ErrorCodes errorCode)
     {
         switch (errorCode)
@@ -160,14 +164,22 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
         }
     }
     /// <summary>
-    /// Takes params via "X" button from list on (ContactListPage) and passes them to (GetContactByEmailButton). Also Prepoulates (RegistrationForm) on (ContactDeletePage) with (contactToDelete)
+    /// Takes params via Edit button from list on (ContactListPage) and passes them to (GetContactByEmailButton). Also Prepoulates (RegistrationForm) on (ContactUpdatePage) with (contactToUpdate)
     /// </summary>
     /// <param name="query">(PContact) data</param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        var contactToDelete = (query["PContact"] as PContact)!;
-        GetContactByEmailButton(contactToDelete);
-        RegistrationForm = contactToDelete;
+        try
+        {
+            var contactToUpdate = (query["PContact"] as PContact)!;
+            GetContactByEmailButton(contactToUpdate);
+            RegistrationForm = contactToUpdate;
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
     }
 
     /// <summary>
@@ -176,6 +188,7 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
     private void ClearDataOnScreen()
     {
         SinglePContactByEmail = [];
+        UpdatedContactByEmail = [];
         RegistrationForm = new();
         if (StatusUpdateText.Any())
         {
