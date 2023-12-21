@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
+using ContactBookMaui.Pages;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -111,7 +112,7 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         {
             IPContact contactToUpdate = SinglePContactByEmail.FirstOrDefault()!;
 
-            string textToAdd = "Has been\nupdated to:";
+            string textToAdd = "Updated To:";
 
             if (contactToUpdate != null)
             {
@@ -135,8 +136,10 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     private async Task CancelAndNavigateToListContact()
     {
         ClearDataOnScreen();
+        //await Shell.Current.GoToAsync(nameof(ContactListPage)); - The blue underline in tab navigation doesnt move when using this command.
         await Shell.Current.GoToAsync("//ContactListPage");
     }
+
 
     /// <summary>
     /// Displays error messages when (GetContactByEmailButton) has wrong or missing input

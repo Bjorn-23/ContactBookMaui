@@ -104,23 +104,22 @@ public class ContactRepository : IContactRepository
         {
             if (_fileService != null && updatedContactDetails.Email != "" && updatedContactDetails.FirstName != "")
             {
+              
                 contactToUpdate = updatedContactDetails;
-                bool result = _fileService!.WriteToFile(_pContactList, _filePath);
-                PContactListUpdated?.Invoke(this, EventArgs.Empty);
-
-                if (result)
+                int index = _pContactList.FindIndex(c => c.Email == contactToUpdate.Email);
+                
+                if (index >= 0)
                 {
-                    return true;
+                    _pContactList[index] = updatedContactDetails;
+
+                    bool result = _fileService!.WriteToFile(_pContactList, _filePath);
+                    PContactListUpdated?.Invoke(this, EventArgs.Empty);
+
+                    if (result)
+                    {
+                        return true;
+                    }
                 }
-
-                //var res1 = DeleteContactByEmail(contactToUpdate);
-                //var res2 = AddContactToList(updatedContactDetails);
-                //PContactListUpdated?.Invoke(this, EventArgs.Empty);
-
-                //if (res1 && res2)
-                //{
-                //    return true;
-                //}
             }
             else
                 return false;

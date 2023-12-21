@@ -10,28 +10,33 @@
              
              Title="Contact Main Page">
     <ScrollView>
-        
         <VerticalStackLayout Margin="15">
-            <Label Text="Welcome to Contact Book X6000 PRO." FontSize="16" FontAttributes="Bold" Margin="10,15,0,0" />
-            <Label Text="Home to all your contacts since 2023." FontSize="12" FontAttributes="Italic" Margin="10,0,0,5" />
-            
-            <CollectionView ItemsSource="{Binding PContactList}" Margin="10,15,0,5">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type models:PContact}">
+            <Grid RowDefinitions="Auto, *" RowSpacing="15">
 
-                        <Grid ColumnDefinitions="*, auto">
+                <VerticalStackLayout Grid.Row="0" >
+                    <Label Text="Welcome to Contact Book X6000 PRO." FontSize="16" FontAttributes="Bold" Margin="10,15,0,0" />
+                    <Label Text="Home to all your contacts since 2023." FontSize="12" FontAttributes="Italic" Margin="10,0,0,5" />
+                </VerticalStackLayout>
 
-                            <VerticalStackLayout Grid.Column="0" Margin="0,0,0,15">
-                                <Label Text="{Binding FullName}" FontSize="18" />
-                                <Label Text="{Binding Email}" FontSize="14" FontAttributes="Italic" />
-                            </VerticalStackLayout>
 
-                        </Grid>
+                <CollectionView Grid.Row="1" ItemsSource="{Binding PContactList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type models:PContact}">
 
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>                   
+                            <Frame Margin="0,0,0,15">
+                                <VerticalStackLayout Grid.Column="0" >
+                                    <Label Text="{Binding FullName}" FontSize="18" />
+                                    <Label Text="{Binding Email}" FontSize="14" FontAttributes="Italic" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+        </VerticalStackLayout>
 
     </ScrollView>
 </ContentPage>

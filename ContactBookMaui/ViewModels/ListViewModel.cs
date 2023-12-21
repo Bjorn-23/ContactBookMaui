@@ -69,6 +69,24 @@ public partial class ListViewModel : ObservableObject
         await Shell.Current.GoToAsync("//ContactDeletePage", parameters);
     }
 
+    [RelayCommand]
+    public async Task NavigateToAddWithNoData()
+    {
+        await Shell.Current.GoToAsync("//ContactAddPage");
+    }
+
+    [RelayCommand]
+    public async Task NavigateToUpdateWithNoData()
+    {
+        await Shell.Current.GoToAsync("//ContactUpdatePage");
+    }
+
+    [RelayCommand]
+    public async Task NavigateToDeleteWithNoData()
+    {
+        await Shell.Current.GoToAsync("//ContactDeletePage");
+    }
+
     /// <summary>
     /// Updates (PContactlist) in methods after that method modifies it.
     /// </summary>

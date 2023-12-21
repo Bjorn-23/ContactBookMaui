@@ -11,6 +11,12 @@
 
     <ScrollView>  
         <VerticalStackLayout Margin="15">
+
+            <Grid ColumnDefinitions="auto,*,*" ColumnSpacing="10">
+                <Button Grid.Column="0" Text="{x:Static models:FASolidIcons.ArrowLeftLong}" FontSize="16" FontFamily="FASolid" BackgroundColor="#c4c4c4" Command="{Binding CancelAndNavigateToListContactCommand}" Padding="20,8"/>
+                
+            </Grid>
+
             <Grid RowDefinitions="auto, auto, *">
                 
                 <VerticalStackLayout Grid.Row="0">                    
@@ -23,16 +29,18 @@
 
                 <Grid Grid.Row="1" ColumnDefinitions="*, auto, *">
 
-                    <CollectionView Grid.Column="0" ItemsSource="{Binding SinglePContactByEmail}" Margin="0,20" HorizontalOptions="Center">
+                    <CollectionView Grid.Column="0" ItemsSource="{Binding SinglePContactByEmail}" Margin="0,20" HorizontalOptions="CenterAndExpand">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type models:PContact}">
 
-                                <VerticalStackLayout>
-                                    <Label Text="{Binding FullName}" FontSize="16" />
-                                    <Label Text="{Binding Email}" FontSize="14" />
-                                    <Label Text="{Binding PhoneNumber}" FontSize="14" />
-                                    <Label Text="{Binding Address}" FontSize="14" />
-                                </VerticalStackLayout>
+                                <Frame BackgroundColor="#e7e7e7">
+                                    <VerticalStackLayout Padding="15,0">
+                                        <Label Text="{Binding FullName}" FontSize="16" />
+                                        <Label Text="{Binding Email}" FontSize="14" />
+                                        <Label Text="{Binding PhoneNumber}" FontSize="14" />
+                                        <Label Text="{Binding Address}" FontSize="14" />
+                                    </VerticalStackLayout>                                    
+                                </Frame>
 
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -41,7 +49,9 @@
                     <CollectionView Grid.Column="1" ItemsSource="{Binding StatusUpdateText}" Margin="0,20" HorizontalOptions="Center" VerticalOptions="Center">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type x:String}">
+                                
                                 <Label  Text="{Binding .}" FontAttributes="Bold"/>
+                                
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
@@ -50,12 +60,14 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type models:PContact}">
 
-                                <VerticalStackLayout>
-                                    <Label Text="{Binding FullName}" FontSize="16" />
-                                    <Label Text="{Binding Email}" FontSize="14" />
-                                    <Label Text="{Binding PhoneNumber}" FontSize="14" />
-                                    <Label Text="{Binding Address}" FontSize="14" />
-                                </VerticalStackLayout>
+                                <Frame BackgroundColor="#e7e7e7">
+                                    <VerticalStackLayout Padding="15,0">
+                                        <Label Text="{Binding FullName}" FontSize="16" />
+                                        <Label Text="{Binding Email}" FontSize="14" />
+                                        <Label Text="{Binding PhoneNumber}" FontSize="14" />
+                                        <Label Text="{Binding Address}" FontSize="14" />
+                                    </VerticalStackLayout>
+                                </Frame>
 
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -83,8 +95,8 @@
                     <Entry Text="{Binding RegistrationForm.Address}"/>
 
                     <Grid ColumnDefinitions="*, *">
-                        <Button Grid.Column="0" Text="Update Contact" FontSize="16" BackgroundColor="#34B33A"  CommandParameter="{Binding RegistrationForm}" Command="{Binding Path=UpdateContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:UpdateViewModel}}}" Margin="0 ,20, 5, 20" Padding="0,10" />
-                        <Button Grid.Column="1" Text="Cancel" FontSize="16" BackgroundColor="#E06D2F"  Command="{Binding CancelAndNavigateToListContactCommand}" Margin="5 ,20,0,20" Padding="0,10"/>
+                        <Button Grid.Column="0" Text="Update Contact" FontSize="16" BackgroundColor="#E034B33A"  CommandParameter="{Binding RegistrationForm}" Command="{Binding Path=UpdateContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:UpdateViewModel}}}" Margin="0 ,20, 5, 20" Padding="0,10" />
+                        <Button Grid.Column="1" Text="Cancel" FontSize="16" BackgroundColor="#c4c4c4"  Command="{Binding CancelAndNavigateToListContactCommand}" Margin="5 ,20,0,20" Padding="0,10"/>
                     </Grid>
                 </VerticalStackLayout>
 
