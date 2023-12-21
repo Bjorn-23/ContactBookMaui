@@ -12,6 +12,6 @@ public interface IPContactServices
     public bool UpdateContactToListByEmail(IPContact contactToUpdate, PContact updatedContactDetails);
     public bool DeleteContactByEmail(IPContact contactToDelete);
 
-
+    public event EventHandler? PContactListUpdated;
 
 }
