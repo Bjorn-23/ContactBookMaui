@@ -4,7 +4,7 @@ namespace ContactBookMaui.Pages;
 
 public partial class ContactUpdatePage : ContentPage
 {
-	public ContactUpdatePage(UpdateViewModel viewModel)
+	public ContactUpdatePage(PContactUpdateViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;

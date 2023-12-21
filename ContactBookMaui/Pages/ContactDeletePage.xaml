@@ -5,7 +5,7 @@
              
              xmlns:models="clr-namespace:ContactBook_Shared.Models;assembly=ContactBook_Shared"
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
-             x:DataType="{x:Type viewmodel:DeleteViewModel}"
+             x:DataType="{x:Type viewmodel:PContactDeleteViewModel}"
              
              Title="Contact Delete Page">
     <ScrollView>
@@ -22,7 +22,7 @@
                         <Label Text="Type in email of contact to delete" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
                     <Entry Text="{Binding EmailOfContactToUpdateOrDelete.Email}"/>
 
-                    <Button Text="Get Contact To Delete" CommandParameter="{Binding EmailOfContactToUpdateOrDelete}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:DeleteViewModel}}}" Margin="0,15"/>                
+                    <Button Text="Get Contact To Delete" CommandParameter="{Binding EmailOfContactToUpdateOrDelete}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:PContactDeleteViewModel}}}" Margin="0,15"/>                
                 </VerticalStackLayout>            
 
 

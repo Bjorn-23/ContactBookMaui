@@ -8,9 +8,14 @@ using Microsoft.Extensions.Hosting;
 var builder = Host.CreateDefaultBuilder().ConfigureServices(services =>
 {
 
-    services.AddSingleton<IContactRepository, ContactRepository>();
-    services.AddSingleton<IFileServices, FileServices>();
+    services.AddSingleton<IPContactServices, PContactServices>();
+    services.AddSingleton<IFileRepository, FileRepository>();
     services.AddSingleton<IMenuServices, MenuServices>();
+
+    //Old ones - before refactoring
+    //services.AddSingleton<IContactRepository, ContactRepository>();
+    //services.AddSingleton<IFileServices, FileServices>();
+    //services.AddSingleton<IMenuServices, MenuServices>();
 
 }).Build();
 

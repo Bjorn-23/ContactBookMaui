@@ -5,7 +5,7 @@
              
              xmlns:models="clr-namespace:ContactBook_Shared.Models;assembly=ContactBook_Shared"
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
-             x:DataType="{x:Type viewmodel:AddViewModel}"
+             x:DataType="{x:Type viewmodel:PContactAddViewModel}"
              
              Title="Contact Add Page">
     

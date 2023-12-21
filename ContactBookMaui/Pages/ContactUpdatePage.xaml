@@ -5,7 +5,7 @@
              
              xmlns:models="clr-namespace:ContactBook_Shared.Models;assembly=ContactBook_Shared"
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
-             x:DataType="{x:Type viewmodel:UpdateViewModel}"
+             x:DataType="{x:Type viewmodel:PContactUpdateViewModel}"
              
              Title="Contact Update Page">
 
@@ -24,7 +24,7 @@
                     <Label Text="Type email of contact to update:" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
                     <Entry Text="{Binding EmailOfContactToUpdateOrDelete.Email}"/>
 
-                    <Button Text="Get Contact To Update" CommandParameter="{Binding EmailOfContactToUpdateOrDelete}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:UpdateViewModel}}}" Margin="0,15"/>
+                    <Button Text="Get Contact To Update" CommandParameter="{Binding EmailOfContactToUpdateOrDelete}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:PContactUpdateViewModel}}}" Margin="0,15"/>
                 </VerticalStackLayout>
 
                 <Grid Grid.Row="1" ColumnDefinitions="*, auto, *">
@@ -95,7 +95,7 @@
                     <Entry Text="{Binding RegistrationForm.Address}"/>
 
                     <Grid ColumnDefinitions="*, *">
-                        <Button Grid.Column="0" Text="Update Contact" FontSize="16" BackgroundColor="#E034B33A"  CommandParameter="{Binding RegistrationForm}" Command="{Binding Path=UpdateContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:UpdateViewModel}}}" Margin="0 ,20, 5, 20" Padding="0,10" />
+                        <Button Grid.Column="0" Text="Update Contact" FontSize="16" BackgroundColor="#E034B33A"  CommandParameter="{Binding RegistrationForm}" Command="{Binding Path=UpdateContactButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:PContactUpdateViewModel}}}" Margin="0 ,20, 5, 20" Padding="0,10" />
                         <Button Grid.Column="1" Text="Cancel" FontSize="16" BackgroundColor="#c4c4c4"  Command="{Binding CancelAndNavigateToListContactCommand}" Margin="5 ,20,0,20" Padding="0,10"/>
                     </Grid>
                 </VerticalStackLayout>

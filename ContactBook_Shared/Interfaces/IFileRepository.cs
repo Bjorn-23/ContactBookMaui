@@ -1,10 +1,9 @@
-﻿namespace ContactBook_Shared.Interfaces
+﻿namespace ContactBook_Shared.Interfaces;
+
+public interface IFileRepository
 {
-    internal interface IFileRepository
-    {
-        public string GetFile(string filePath);
+    public string GetFile(string filePath);
 
-        public bool WriteToFile(string pContactListUpdated, string filePath);
+    public bool WriteToFile(string pContactListUpdated, string filePath);
 
-    }
 }

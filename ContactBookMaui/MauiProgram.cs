@@ -24,36 +24,39 @@ namespace ContactBookMaui
                     fonts.AddFont("fa-solid-900.ttf", "FASolid");
                 });
 
-            builder.Services.AddSingleton<IFileServices, FileServices>();
-            builder.Services.AddSingleton<IContactRepository, ContactRepository>();
+            builder.Services.AddSingleton<IFileRepository, FileRepository>();
+            builder.Services.AddSingleton<IPContactServices, PContactServices>();
 
-            //builder.Services.AddSingleton<MainViewModel>();
-            //builder.Services.AddSingleton<ContactMainPage>();
-
-            builder.Services.AddSingleton<ListViewModel>();
+            builder.Services.AddSingleton<PContactListViewModel>();
             builder.Services.AddSingleton<ContactListPage>();
 
-            builder.Services.AddTransient<AddViewModel>();
+            builder.Services.AddTransient<PContactAddViewModel>();
             builder.Services.AddTransient<ContactAddPage>();
 
-            builder.Services.AddTransient<UpdateViewModel>();
+            builder.Services.AddTransient<PContactUpdateViewModel>();
             builder.Services.AddTransient<ContactUpdatePage>();
 
-            builder.Services.AddTransient<DeleteViewModel>();
+            builder.Services.AddTransient<PContactDeleteViewModel>();
             builder.Services.AddTransient<ContactDeletePage>();
 
+            // OLD ONES BELOW
 
+            //builder.Services.AddSingleton<IFileServices, FileServices>();
+            //builder.Services.AddSingleton<IContactRepository, ContactRepository>();
 
+            ////builder.Services.AddSingleton<MainViewModel>();
+            ////builder.Services.AddSingleton<ContactMainPage>();
 
+            //builder.Services.AddSingleton<ListViewModel>();
+            //builder.Services.AddSingleton<ContactListPage>();
 
-
-
-
-            // Do I have any need for changing these from AddSingleton? Makes no different for testing...
-            //builder.Services.AddScoped<ContactMainPage>();
-            //builder.Services.AddScoped<ContactListPage>();
+            //builder.Services.AddTransient<AddViewModel>();
             //builder.Services.AddTransient<ContactAddPage>();
+
+            //builder.Services.AddTransient<UpdateViewModel>();
             //builder.Services.AddTransient<ContactUpdatePage>();
+
+            //builder.Services.AddTransient<DeleteViewModel>();
             //builder.Services.AddTransient<ContactDeletePage>();
 
             return builder.Build();

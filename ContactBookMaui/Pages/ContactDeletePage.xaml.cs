@@ -4,7 +4,7 @@ namespace ContactBookMaui.Pages;
 
 public partial class ContactDeletePage : ContentPage
 {
-	public ContactDeletePage(DeleteViewModel viewModel)
+	public ContactDeletePage(PContactDeleteViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;

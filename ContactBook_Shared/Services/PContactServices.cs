@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace ContactBook_Shared.Services;
 
-internal class PContactServices : IPContactServices
+public class PContactServices : IPContactServices
 {
     public PContactServices()
     {
@@ -95,7 +95,7 @@ internal class PContactServices : IPContactServices
         {
             Debug.WriteLine(ex.Message);
         }
-        return _newList;
+        return null!;
     }
 
     public bool UpdateContactToListByEmail(IPContact contactToUpdate, PContact updatedContactDetails)

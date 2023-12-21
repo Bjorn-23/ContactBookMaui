@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
 
-public partial class PContactUpdateViewModel : ObservableObject
+public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IPContactServices _pContactServices;
 
