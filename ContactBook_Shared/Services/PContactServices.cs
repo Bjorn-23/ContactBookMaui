@@ -19,6 +19,9 @@ public class PContactServices : IPContactServices
 
     private readonly IFileRepository? _fileRepository;
 
+    //File directories where you might find the list on disk:
+    //C:\Users\bjorn\AppData\Local\Contacts - ConsoleApp
+    //C:\Users\bjorn\AppData\Local\Packages\com.companyname.contactbookmaui_9zz4h110yvjzm\LocalCache\Local\Contacts.json
     private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Contacts.json");
 
     public event EventHandler? PContactListUpdated;

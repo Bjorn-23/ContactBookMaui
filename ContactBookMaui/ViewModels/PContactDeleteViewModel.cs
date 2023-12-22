@@ -165,9 +165,17 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
     /// <param name="query">(PContact) data</param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        var contactToDelete = (query["PContact"] as PContact)!;
-        GetContactByEmailButton(contactToDelete);
-        RegistrationForm = contactToDelete;
+        try
+        {
+            var contactToDelete = (query["PContact"] as PContact)!;
+            GetContactByEmailButton(contactToDelete);
+            RegistrationForm = contactToDelete;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
+
     }
 
     /// <summary>

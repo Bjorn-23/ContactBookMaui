@@ -23,7 +23,7 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
         {
             PContactList = _pContactServices.GetAllContactsFromList();
         };
-        UpdateContactList();
+        //UpdateContactList();
     }
     /// <summary>
     /// Form for filling in new details via (ContactAddPage )or edit details on (ContactUpdatePage)
