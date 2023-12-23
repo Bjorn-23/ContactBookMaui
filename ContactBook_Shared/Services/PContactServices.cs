@@ -1,4 +1,5 @@
-﻿using ContactBook_Shared.Interfaces;
+﻿
+using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
 using Microsoft.Maui.ApplicationModel.Communication;
 using Newtonsoft.Json;
@@ -107,8 +108,8 @@ public class PContactServices : IPContactServices
         {
             if (!string.IsNullOrEmpty(updatedContactDetails.Email.ToString()) && !string.IsNullOrEmpty(updatedContactDetails.FirstName.ToString()))
             {
-                contactToUpdate = updatedContactDetails;
                 int index = _pContactList.IndexOf(_pContactList.FirstOrDefault(c => c.Email == contactToUpdate.Email)!);
+                contactToUpdate = updatedContactDetails;
 
                 if (index >= 0)
                 {
