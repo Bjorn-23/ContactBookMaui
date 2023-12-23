@@ -45,5 +45,4 @@ public interface IPContactServices
     /// Eventhandler for ContactServices, updates ObservableCollection(s) when _pContalist changes.
     /// </summary>
     public event EventHandler? PContactListUpdated;
-
 }
