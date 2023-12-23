@@ -7,13 +7,14 @@ using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
 
-public partial class AddViewModel : ObservableObject
+public partial class PContactAddViewModel : ObservableObject
 {
-    private readonly IContactRepository _contactRepository;
+    private readonly IPContactServices _pContactServices;
 
-    public AddViewModel(IContactRepository contactRepository)
+    public PContactAddViewModel(IPContactServices pContactServices)
     {
-        _contactRepository = contactRepository;
+        _pContactServices = pContactServices;
+        PContactList = _pContactServices.GetAllContactsFromList();
         UpdateContactList();
     }
 
@@ -37,7 +38,7 @@ public partial class AddViewModel : ObservableObject
     {
         if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
         {
-            var result = _contactRepository.AddContactToList(RegistrationForm);
+            var result = _pContactServices.AddContactToList(RegistrationForm);
             if (result)
             {
                 UpdateContactList();
@@ -64,7 +65,7 @@ public partial class AddViewModel : ObservableObject
     {
         try
         {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+            PContactList = _pContactServices.GetAllContactsFromList();
         }
         catch (Exception ex)
         {

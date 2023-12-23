@@ -25,7 +25,7 @@ public interface IPContact
     /// </summary>
     string Address { get; set; }
     /// <summary>
-    /// First name and last name of PContact concatenated.
+    /// First name and last name of PContact concatenated. Only used in XAML UI.
     /// </summary>
     public string FullName => $"{FirstName} {LastName}";
 }

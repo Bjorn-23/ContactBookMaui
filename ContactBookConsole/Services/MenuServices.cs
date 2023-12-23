@@ -1,18 +1,17 @@
-﻿using ContactBook_Shared.Interfaces;
-using ContactBook_Shared.Models;
+﻿using System.Diagnostics.Contracts;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
+using ContactBook_Shared.Interfaces;
+using ContactBook_Shared.Models;
+using System.Collections.ObjectModel;
 
+namespace ContactBookConsole.Services;
 
-namespace ContactBook_Shared.Services;
-
-public class MenuServices : IMenuServices
+internal class MenuServices : IMenuServices
 {
-
-    private readonly IContactRepository _contactRepository;
-    public MenuServices(IContactRepository contactRepository)
+    private readonly IPContactServices _pContactService;
+    public MenuServices(IPContactServices pContactService)
     {
-        _contactRepository = contactRepository;
+        _pContactService = pContactService;
     }
 
     /// <summary>
@@ -21,23 +20,21 @@ public class MenuServices : IMenuServices
     /// </summary>
     public void MenuStart()
     {
-
         while (true)
         {
-
             Console.Clear();
             Console.WriteLine("------Address Book 3000------");
             Console.WriteLine("-----------------------------");
             Console.WriteLine("\nPlease Choose An Option");
-            Console.WriteLine($"{"\n1.", -5} Add new Contact");
-            Console.WriteLine($"{"\n2.", -5} Show All Contacts");
-            Console.WriteLine($"{"\n3.", -5} Show Contact By Email");
-            Console.WriteLine($"{"\n4.", -5} Update Contact By Email");
-            Console.WriteLine($"{"\n5.", -5} Delete Contact By Email");
+            Console.WriteLine($"{"\n1.",-5} Add new Contact");
+            Console.WriteLine($"{"\n2.",-5} Show All Contacts");
+            Console.WriteLine($"{"\n3.",-5} Show Contact By Email");
+            Console.WriteLine($"{"\n4.",-5} Update Contact By Email");
+            Console.WriteLine($"{"\n5.",-5} Delete Contact By Email");
             Console.WriteLine($"{"\n0.",-5} Exit Application");
 
             Console.Write("\nPlease choose an option: ");
-            var answer = Console.ReadLine()?? "";
+            var answer = Console.ReadLine() ?? "";
 
             switch (answer)
             {
@@ -62,9 +59,9 @@ public class MenuServices : IMenuServices
                 default:
                     Console.WriteLine("Invalid Option. Press Any Key To Try Again.");
                     Console.ReadKey();
-                    break;  
+                    break;
             }
-            
+
             void ShowExitApplication()
             {
                 Console.Write($"\nDo You Want To Quit The Application? (y/n):\n");
@@ -94,7 +91,7 @@ public class MenuServices : IMenuServices
                 Console.Write("Address (Streetname & Number, Post Code, City): ");
                 contact.Address = Console.ReadLine()!;
 
-                var res = _contactRepository.AddContactToList(contact);
+                var res = _pContactService.AddContactToList(contact);
 
                 if (res == true)
                 {
@@ -117,7 +114,7 @@ public class MenuServices : IMenuServices
 
             void ShowGetAllContacts()
             {
-                var contacts = _contactRepository.GetAllContactsFromList();    
+                var contacts = _pContactService.GetAllContactsFromList();
                 Console.Clear();
                 Console.WriteLine("----------Add Contact--------");
                 Console.WriteLine("-----------------------------");
@@ -140,10 +137,10 @@ public class MenuServices : IMenuServices
                 Console.WriteLine("\nType in Email of Employee to show.\n");
                 Console.Write("Email: ");
                 contact.Email = Console.ReadLine()!;
-                var result = _contactRepository.GetContactFromListByEmail(contact);
+                var result = _pContactService.GetContactFromListByEmail(contact);
                 if (result != null)
                 {
-                var match = LoopName(result);
+                    LoopName(result);
                 }
                 else
                     Console.WriteLine("\nNo Contact With That Email address.");
@@ -160,7 +157,7 @@ public class MenuServices : IMenuServices
                 Console.WriteLine("\nType Email Of Employee To Update.\n");
                 Console.Write("Email: ");
                 contact.Email = Console.ReadLine()!;
-                var result = _contactRepository.GetContactFromListByEmail(contact);
+                var result = _pContactService.GetContactFromListByEmail(contact);
                 if (result == null)
                 {
                     Console.WriteLine("\nNo Contact With That Email Address.");
@@ -188,7 +185,7 @@ public class MenuServices : IMenuServices
                         Console.Write("Address (Streetname & Number, Post Code, City): ");
                         updatedContact.Address = Console.ReadLine()!;
 
-                        var res = _contactRepository.UpdateContactToListByEmail(match, updatedContact);
+                        var res = _pContactService.UpdateContactToListByEmail(match, updatedContact);
 
                         if (res)
                         {
@@ -210,9 +207,9 @@ public class MenuServices : IMenuServices
                     else
                     {
                         Console.WriteLine($"\n{match.FirstName} {match.LastName} Will Not Be Updated.");
-                    }
-                    PressAnyKey();
-                }                
+                    }                    
+                }
+                PressAnyKey();
             }
 
             void ShowDeleteContactByEmail()
@@ -225,7 +222,7 @@ public class MenuServices : IMenuServices
                 Console.WriteLine("\nType Email Of Employee To Delete.\n");
                 Console.Write("Email: ");
                 contact.Email = Console.ReadLine()!;
-                var result = _contactRepository.GetContactFromListByEmail(contact);
+                var result = _pContactService.GetContactFromListByEmail(contact);
                 if (result == null)
                 {
                     Console.WriteLine("\nNo Contact With That Email Address.");
@@ -239,7 +236,7 @@ public class MenuServices : IMenuServices
 
                     if (answer.ToLower() == "y")
                     {
-                        var contactToDelete = _contactRepository.DeleteContactByEmail(match);
+                        var contactToDelete = _pContactService.DeleteContactByEmail(match);
 
                         if (contactToDelete)
                         {
@@ -286,7 +283,7 @@ public class MenuServices : IMenuServices
             /// </summary>
             /// <param name="result"></param>
             /// <returns>IContact</returns>
-            IPContact LoopName(List<IPContact> result)
+            IPContact LoopName(ObservableCollection<IPContact> result)
             {
                 try
                 {

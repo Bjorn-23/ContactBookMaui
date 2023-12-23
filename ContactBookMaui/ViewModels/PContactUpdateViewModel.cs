@@ -5,25 +5,25 @@ using ContactBook_Shared.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-
 namespace ContactBookMaui.ViewModels;
 internal enum ErrorCodes
 {
     BadRequest, 
     NotFound,
 }
-public partial class UpdateViewModel : ObservableObject, IQueryAttributable
-{
-    private readonly IContactRepository _contactRepository;
 
-    public UpdateViewModel(IContactRepository contactRepository)
+public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributable
+{
+    private readonly IPContactServices _pContactServices;
+
+    public PContactUpdateViewModel(IPContactServices pContactServices)
     {
-        _contactRepository = contactRepository;
-        _contactRepository.PContactListUpdated += (sender, e) =>
+        _pContactServices = pContactServices;
+        _pContactServices.PContactListUpdated += (sender, e) =>
         {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+            PContactList = _pContactServices.GetAllContactsFromList();
         };
-        UpdateContactList();
+        //UpdateContactList();
     }
     /// <summary>
     /// Form for filling in new details via (ContactAddPage )or edit details on (ContactUpdatePage)
@@ -61,7 +61,6 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     [ObservableProperty]
     private ObservableCollection<string> _statusUpdateText = new ObservableCollection<string>();
 
-
     /// <summary>
     /// Creates new ObservableCollection (_singlePContactByEmail) from email input in form (_emailOfContactToUpdateOrDelete) and the method (GetContactFromListByEmail)
     /// </summary>
@@ -72,8 +71,8 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         try
         {
             if (!string.IsNullOrWhiteSpace(contactToUpdate.Email))
-            {                
-                SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList()) ?? [];
+            {
+                SinglePContactByEmail = _pContactServices.GetContactFromListByEmail(contactToUpdate);
                 UpdatedContactByEmail = [];
                 if (StatusUpdateText.Any())
                 {
@@ -83,7 +82,7 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
                 {
                     ErrorOnUpDateAlert(ErrorCodes.NotFound);
                     ClearDataOnScreen();
-                }  
+                }
             }
             else
             {
@@ -107,16 +106,17 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     {
         if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
         {
-            IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
-            string textToAdd = "Has been updated to:";
+            IPContact contactToUpdate = SinglePContactByEmail.FirstOrDefault()!;
 
-            if (contactToDelete != null)
+            string textToAdd = "Updated To:";
+
+            if (contactToUpdate != null)
             {
-                var result = _contactRepository.UpdateContactToListByEmail((IPContact)contactToDelete, updatedContact);
+                var result = _pContactServices.UpdateContactToListByEmail(contactToUpdate, updatedContact);
                 if (result)
                 {
                     StatusUpdateText.Add(textToAdd);
-                    UpdatedContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(updatedContact).Select(contact => contact).ToList()) ?? [];
+                    UpdatedContactByEmail = _pContactServices.GetContactFromListByEmail(updatedContact);
                     UpdateContactList();
                     RegistrationForm = new();
                 }
@@ -134,6 +134,7 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
         ClearDataOnScreen();
         await Shell.Current.GoToAsync("//ContactListPage");
     }
+
 
     /// <summary>
     /// Displays error messages when (GetContactByEmailButton) has wrong or missing input
@@ -160,7 +161,7 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     {
         try
         {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+            PContactList = _pContactServices.GetAllContactsFromList();
         }
         catch (Exception ex)
         {
@@ -173,9 +174,17 @@ public partial class UpdateViewModel : ObservableObject, IQueryAttributable
     /// <param name="query">(PContact) data</param>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        var contactToUpdate = (query["PContact"] as PContact)!;
-        GetContactByEmailButton(contactToUpdate);
-        RegistrationForm = contactToUpdate;
+        try
+        {
+            var contactToUpdate = (query["PContact"] as PContact)!;
+            GetContactByEmailButton(contactToUpdate);
+            RegistrationForm = contactToUpdate;
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
     }
 
     /// <summary>

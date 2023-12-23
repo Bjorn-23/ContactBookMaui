@@ -5,18 +5,24 @@
              
              xmlns:models="clr-namespace:ContactBook_Shared.Models;assembly=ContactBook_Shared"
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
-             x:DataType="{x:Type viewmodel:DeleteViewModel}"
+             x:DataType="{x:Type viewmodel:PContactDeleteViewModel}"
              
              Title="Contact Delete Page">
     <ScrollView>
         <VerticalStackLayout Margin="15">
+            <Grid ColumnDefinitions="auto,*,*" ColumnSpacing="10">
+                <!--<Button Grid.Column="0" Text=" Go Back" FontSize="16" BackgroundColor="#c4c4c4" Command="{Binding CancelAndNavigateToListContactCommand}"/>-->
+                <Button Grid.Column="0" Text="{x:Static models:FASolidIcons.ArrowLeftLong}" FontSize="16" FontFamily="FASolid" BackgroundColor="#c4c4c4" Command="{Binding CancelAndNavigateToListContactCommand}" Padding="20,8"/>
+
+            </Grid>
+
             <Grid RowDefinitions="auto, auto, *">
                 
                 <VerticalStackLayout Grid.Row="0">
                         <Label Text="Type in email of contact to delete" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
                     <Entry Text="{Binding EmailOfContactToUpdateOrDelete.Email}"/>
 
-                    <Button Text="Get Contact To Delete" CommandParameter="{Binding EmailOfContactToUpdateOrDelete}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:DeleteViewModel}}}" Margin="0,15"/>                
+                    <Button Text="Get Contact To Delete" CommandParameter="{Binding EmailOfContactToUpdateOrDelete}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:PContactDeleteViewModel}}}" Margin="0,15"/>                
                 </VerticalStackLayout>            
 
 
@@ -26,12 +32,14 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type models:PContact}">
 
-                                <VerticalStackLayout>
-                                    <Label Text="{Binding FullName}" FontSize="16" />
-                                    <Label Text="{Binding Email}" FontSize="14" />
-                                    <Label Text="{Binding PhoneNumber}" FontSize="14" />
-                                    <Label Text="{Binding Address}" FontSize="14" />
-                                </VerticalStackLayout>
+                                <Frame BackgroundColor="#e7e7e7">
+                                    <VerticalStackLayout>
+                                        <Label Text="{Binding FullName}" FontSize="16" />
+                                        <Label Text="{Binding Email}" FontSize="14" />
+                                        <Label Text="{Binding PhoneNumber}" FontSize="14" />
+                                        <Label Text="{Binding Address}" FontSize="14" />
+                                    </VerticalStackLayout>                                    
+                                </Frame>
 
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -51,8 +59,8 @@
                 <VerticalStackLayout Grid.Row="2">
                     <Label Text="Do you want to delete this contact?" FontSize="16" FontAttributes="Bold" Margin="10,0,0,5" />
                     <Grid ColumnDefinitions="*, *">
-                        <Button Grid.Column="0" Text="Yes - Delete Contact" FontSize="16" BackgroundColor="#E52B1D" Command="{Binding RemoveContactByEmailCommand}"  Margin="0,20,5,20" Padding="0,10"/>
-                        <Button Grid.Column="1" Text="No - Cancel" FontSize="16" BackgroundColor="#E06D2F" Command="{Binding CancelAndNavigateToListContactCommand}" Margin="5,20,0,20" Padding="0,10"/>
+                        <Button Grid.Column="0" Text="Yes - Delete Contact" FontSize="16" BackgroundColor="#E0E52B1D" Command="{Binding RemoveContactByEmailCommand}"  Margin="0,20,5,20" Padding="0,10"/>
+                        <Button Grid.Column="1" Text="No - Cancel" FontSize="16" BackgroundColor="#c4c4c4" Command="{Binding CancelAndNavigateToListContactCommand}" Margin="5,20,0,20" Padding="0,10"/>
 
                     </Grid>
 

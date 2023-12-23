@@ -1,22 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ContactBook_Shared.Interfaces;
+using ContactBook_Shared.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-
 namespace ContactBookMaui.ViewModels;
 
-public partial class ListViewModel : ObservableObject
+public partial class PContactListViewModel : ObservableObject
 {
-    private readonly IContactRepository _contactRepository;
+    private readonly IPContactServices _pContactServices;
 
-    public ListViewModel(IContactRepository contactRepository)
+    public PContactListViewModel(IPContactServices pContactServices)
     {
-        _contactRepository = contactRepository;
-        _contactRepository.PContactListUpdated += (sender, e) =>
+        _pContactServices = pContactServices;
+        _pContactServices.PContactListUpdated += (sender, e) =>
         {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+            PContactList = _pContactServices.GetAllContactsFromList();
         };
         UpdateContactList();
     }
@@ -27,21 +27,6 @@ public partial class ListViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<IPContact> _pContactList = [];
 
-
-    //[RelayCommand]
-    //public void RemoveContactButton(IPContact contactToDelete)
-    //{
-    //    if (contactToDelete != null)
-    //    {
-    //        var result = _contactRepository.DeleteContactByEmail(contactToDelete);
-    //        if (result)
-    //        {
-    //            UpdateContactList();
-    //        }
-    //    }
-    //}
-
-
     /// <summary>
     /// Passes information from the (PContact) associated with the "Edit" button pressed to (ContactUpdatedPage) and navigates there
     /// </summary>
@@ -50,9 +35,18 @@ public partial class ListViewModel : ObservableObject
     [RelayCommand]
     public async Task NavigateToUpdateContact(IPContact contactToUpdate)
     {
+        IPContact contact = new PContact()
+        {
+            FirstName = contactToUpdate.FirstName,
+            LastName = contactToUpdate.LastName,
+            Email = contactToUpdate.Email,
+            Address = contactToUpdate.Address,
+            PhoneNumber = contactToUpdate.PhoneNumber,
+        };
+
         var parameters = new ShellNavigationQueryParameters
         {
-            {"PContact", contactToUpdate }
+            {"PContact", contact }
         };
 
         await Shell.Current.GoToAsync("//ContactUpdatePage", parameters);
@@ -74,6 +68,24 @@ public partial class ListViewModel : ObservableObject
         await Shell.Current.GoToAsync("//ContactDeletePage", parameters);
     }
 
+    [RelayCommand]
+    public async Task NavigateToAddWithNoData()
+    {
+        await Shell.Current.GoToAsync("//ContactAddPage");
+    }
+
+    [RelayCommand]
+    public async Task NavigateToUpdateWithNoData()
+    {
+        await Shell.Current.GoToAsync("//ContactUpdatePage");
+    }
+
+    [RelayCommand]
+    public async Task NavigateToDeleteWithNoData()
+    {
+        await Shell.Current.GoToAsync("//ContactDeletePage");
+    }
+
     /// <summary>
     /// Updates (PContactlist) in methods after that method modifies it.
     /// </summary>
@@ -81,7 +93,7 @@ public partial class ListViewModel : ObservableObject
     {
         try
         {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+            PContactList = _pContactServices.GetAllContactsFromList();
         }
         catch (Exception ex)
         {

@@ -5,19 +5,18 @@ using ContactBook_Shared.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-
 namespace ContactBookMaui.ViewModels;
 
-public partial class DeleteViewModel : ObservableObject, IQueryAttributable
+public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributable
 {
-    private readonly IContactRepository _contactRepository;
+    private readonly IPContactServices _pContactServices;
 
-    public DeleteViewModel(IContactRepository contactRepository)
+    public PContactDeleteViewModel(IPContactServices pContactServices)
     {
-        _contactRepository = contactRepository;
-        _contactRepository.PContactListUpdated += (sender, e) =>
+        _pContactServices = pContactServices;
+        _pContactServices.PContactListUpdated += (sender, e) =>
         {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+            PContactList = _pContactServices.GetAllContactsFromList();
         };
         UpdateContactList();
     }
@@ -63,8 +62,8 @@ public partial class DeleteViewModel : ObservableObject, IQueryAttributable
         {
             if (!string.IsNullOrWhiteSpace(contactToUpdate.Email))
             {
+                SinglePContactByEmail = _pContactServices.GetContactFromListByEmail(contactToUpdate);
 
-                SinglePContactByEmail = new ObservableCollection<IPContact>(_contactRepository.GetContactFromListByEmail(contactToUpdate).Select(contact => contact).ToList()) ?? [];
                 if (StatusUpdateText.Any())
                 {
                     StatusUpdateText.RemoveAt(0);
@@ -94,20 +93,27 @@ public partial class DeleteViewModel : ObservableObject, IQueryAttributable
     [RelayCommand]
     public void RemoveContactByEmail()
     {
-        if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
+        try
         {
-            IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
-            string displayText = "Has been deleted.";
-
-            if (contactToDelete != null)
+            if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
             {
-                var result = _contactRepository.DeleteContactByEmail(contactToDelete);
-                if (result)
+                IPContact contactToDelete = SinglePContactByEmail.FirstOrDefault()!;
+                string displayText = "Has been deleted.";
+
+                if (contactToDelete != null)
                 {
-                    StatusUpdateText.Add(displayText);
-                    UpdateContactList();
+                    var result = _pContactServices.DeleteContactByEmail(contactToDelete);
+                    if (result)
+                    {
+                        StatusUpdateText.Add(displayText);
+                        UpdateContactList();
+                    }
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
         }
     }
 
@@ -146,7 +152,7 @@ public partial class DeleteViewModel : ObservableObject, IQueryAttributable
     {
         try
         {
-            PContactList = new ObservableCollection<IPContact>(_contactRepository.GetAllContactsFromList().Select(contact => contact).ToList());
+            PContactList = _pContactServices.GetAllContactsFromList();
         }
         catch (Exception ex)
         {
@@ -157,12 +163,19 @@ public partial class DeleteViewModel : ObservableObject, IQueryAttributable
     /// Takes params via "X" button from list on (ContactListPage) and passes them to (GetContactByEmailButton). Also Prepoulates (RegistrationForm) on (ContactDeletePage) with (contactToDelete)
     /// </summary>
     /// <param name="query">(PContact) data</param>
-
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        var contactToDelete = (query["PContact"] as PContact)!;
-        GetContactByEmailButton(contactToDelete);
-        RegistrationForm = contactToDelete;
+        try
+        {
+            var contactToDelete = (query["PContact"] as PContact)!;
+            GetContactByEmailButton(contactToDelete);
+            RegistrationForm = contactToDelete;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
+
     }
 
     /// <summary>
@@ -177,5 +190,4 @@ public partial class DeleteViewModel : ObservableObject, IQueryAttributable
             StatusUpdateText.RemoveAt(0);
         }
     }
-
 }
