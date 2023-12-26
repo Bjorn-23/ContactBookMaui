@@ -119,6 +119,7 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
                     UpdatedContactByEmail = _pContactServices.GetContactFromListByEmail(updatedContact);
                     UpdateContactList();
                     RegistrationForm = new();
+
                 }
             }
         }
