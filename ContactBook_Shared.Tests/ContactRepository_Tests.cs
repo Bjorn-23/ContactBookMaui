@@ -123,20 +123,20 @@ public class ContactRepository_Tests
         // Create contact to be updated
         PContact contactToUpdate = new PContact
         {
-            FirstName = "Aimee",
+            FirstName = "Björn",
             LastName = "Andersson",
-            Email = "aimee@mail.com",
-            PhoneNumber = "0798321654",
-            Address = "Plöjargränd 143"            
+            Email = "bjorn@mail.com",
+            PhoneNumber = "0798654321",
+            Address = "Plöjargränd 143"
         };
 
         // Create new contact details
         PContact updatedContactDetails = new()
         {
-            FirstName = "Björn",
+            FirstName = "Aimee",
             LastName = "Andersson",
-            Email = "bjorn@mail.com",
-            PhoneNumber = "0798654321",
+            Email = "aimee@mail.com",
+            PhoneNumber = "0798321654",
             Address = "Plöjargränd 143"
         };
 
