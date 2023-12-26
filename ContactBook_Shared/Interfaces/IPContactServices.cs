@@ -42,6 +42,20 @@ public interface IPContactServices
     public bool DeleteContactByEmail(IPContact contactToDelete);
 
     /// <summary>
+    /// Serializes an ObservableCollection of _pContactList to a string of IPContact
+    /// </summary>
+    /// <param name="_pContactList">Observable Collection of _pContactList</param>
+    /// <returns>JSON string of _pContactlist called "data"</returns>
+    public string SerializeObject(ObservableCollection<IPContact> _pContactList);
+
+    /// <summary>
+    /// Deserializes a string of IPContact to an ObservableCollection of _pContactList
+    /// </summary>
+    /// <param name="data">The serialized form of a PContact in JSON string</param>
+    /// <returns>ObservableCollection of _pContactList</returns>
+    public ObservableCollection<IPContact> DeserializeObject(string data);
+
+    /// <summary>
     /// Eventhandler for ContactServices, updates ObservableCollection(s) when _pContalist changes.
     /// </summary>
     public event EventHandler? PContactListUpdated;

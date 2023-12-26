@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ContactBookConsole\ContactBookConsole.csproj" />
-    <!--<ProjectReference Include="..\ContactBookMaui\ContactBookMaui.csproj" />-->
     <ProjectReference Include="..\ContactBook_Shared\ContactBook_Shared.csproj" />
   </ItemGroup>
 

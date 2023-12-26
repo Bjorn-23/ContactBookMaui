@@ -32,7 +32,7 @@ public class ContactRepository_Tests
         fileRepositoriesMock.Setup(fs => fs.GetFile(It.IsAny<string>())).Returns(It.IsAny<string>);
 
         // Creates an empty observable collection to compare to the return type of GetAllContactsFromList()
-        ObservableCollection<IPContact> expectedResult = new();
+        ObservableCollection<IPContact> expectedResult = [];
 
         //Create the ContactRepository with the mock file service
         var pContactServices = new PContactServices(fileRepositoriesMock.Object);
@@ -49,7 +49,7 @@ public class ContactRepository_Tests
     public void AddContactToList_AddsOneCustomerToList_ThenReturnsTrue()
     {
         //Arrange
-        PContact contact = new PContact
+        PContact contact = new()
         {
             FirstName = "Björn",
             LastName = "Andersson",
@@ -60,7 +60,7 @@ public class ContactRepository_Tests
 
         // Create the FileRepository with mock
         var fileRepositoriesMock = new Mock<IFileRepository>();
-        
+
         //Create the ContactRepository with the mock file service
         var pContactServices = new PContactServices(fileRepositoriesMock.Object);
 
@@ -86,7 +86,7 @@ public class ContactRepository_Tests
         //Arrange
 
         // Create a contact to get from list
-        PContact contact = new PContact
+        PContact contact = new()
         {
             FirstName = "Björn",
             LastName = "Andersson",
@@ -121,7 +121,7 @@ public class ContactRepository_Tests
     {
         //Arrange
         // Create contact to be updated
-        PContact contactToUpdate = new PContact
+        PContact contactToUpdate = new()
         {
             FirstName = "Björn",
             LastName = "Andersson",
@@ -191,4 +191,77 @@ public class ContactRepository_Tests
         //Assert
         Assert.True(result);
     }
+
+    [Fact]
+    public void SerializeObServableCollection_ShoulReturnString()
+    {
+        //Arrange
+        ObservableCollection<IPContact> testList = [];
+
+        var contact = new PContact
+        {
+            FirstName = "Björn",
+            LastName = "Andersson",
+            Email = "bjorn@domain.com",
+            PhoneNumber = "0798654321",
+            Address = "Storgatan 1, 263 33, Storstan",
+        };
+
+        testList.Add(contact);
+
+        // Create the FileRepository with mock
+        var fileRepositoriesMock = new Mock<IFileRepository>();
+
+        // Create the ContactRepository with the mock file service
+        var pContactServices = new PContactServices(fileRepositoriesMock.Object);
+
+
+        // Act        
+        var result = pContactServices.SerializeObject(testList);
+        var deserializedResult = pContactServices.DeserializeObject(result);
+
+        //Assert
+
+        Assert.NotEmpty(result);
+        Assert.NotNull(result);
+        Assert.Contains(contact.ToString()!, result);
+        Assert.Equivalent(testList, deserializedResult);
+
+    }
+
+    [Fact]
+    public void DeserializeString_ShouldReturnObservableCollection()
+    {
+        //Arrange
+        string data = "[{ \"$type\":\"ContactBook_Shared.Models.PContact, ContactBook_Shared\",\"FirstName\":\"Björn\",\"LastName\":\"Andersson\",\"Email\":\"bjorn@mail.com\",\"PhoneNumber\":\"0798654321\",\"Address\":\"Plöjargränd 143\"}]"; //",\"FullName\":\"Björn Andersson\
+
+        var contact = new PContact
+        {
+            FirstName = "Björn",
+            LastName = "Andersson",
+            Email = "bjorn@mail.com",
+            PhoneNumber = "0798654321",
+            Address = "Plöjargränd 143",
+        };
+
+        ObservableCollection<IPContact> list = [];
+
+        list.Add(contact);
+
+        // Create the FileRepository with mock
+        var fileRepositoriesMock = new Mock<IFileRepository>();
+
+        // Create the ContactRepository with the mock file service
+        var pContactServices = new PContactServices(fileRepositoriesMock.Object);
+
+        //Act
+        var result = pContactServices.DeserializeObject(data);
+        var serializedResult = pContactServices.SerializeObject(result);
+
+        //Assert
+        Assert.True(result.Any());
+        Assert.NotNull(result);
+        Assert.Equivalent(list, result);
+    }
+
 }

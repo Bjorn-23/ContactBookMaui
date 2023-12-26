@@ -59,7 +59,7 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
     /// List displaying a custom text after updating a contact or deleting a contact.
     /// </summary>
     [ObservableProperty]
-    private ObservableCollection<string> _statusUpdateText = new ObservableCollection<string>();
+    private ObservableCollection<string> _statusUpdateText = [];
 
     /// <summary>
     /// Creates new ObservableCollection (_singlePContactByEmail) from email input in form (_emailOfContactToUpdateOrDelete) and the method (GetContactFromListByEmail)
@@ -80,13 +80,13 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
                 }
                 else if (SinglePContactByEmail.Count == 0)
                 {
-                    ErrorOnUpDateAlert(ErrorCodes.NotFound);
+                    PContactUpdateViewModel.ErrorOnUpDateAlert(ErrorCodes.NotFound);
                     ClearDataOnScreen();
                 }
             }
             else
             {
-                ErrorOnUpDateAlert(ErrorCodes.BadRequest);
+                PContactUpdateViewModel.ErrorOnUpDateAlert(ErrorCodes.BadRequest);
                 ClearDataOnScreen();
 
             }
@@ -141,7 +141,7 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
     /// Displays error messages when (GetContactByEmailButton) has wrong or missing input
     /// </summary>
     /// <param name="errorCode">Enums representing error message in a clear way.</param>
-    private async void ErrorOnUpDateAlert(ErrorCodes errorCode)
+    private static async void ErrorOnUpDateAlert(ErrorCodes errorCode)
     {
         switch (errorCode)
         {

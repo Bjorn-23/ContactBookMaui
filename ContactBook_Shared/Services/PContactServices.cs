@@ -14,9 +14,9 @@ public class PContactServices : IPContactServices
     {
     }
 
-    private ObservableCollection<IPContact> _pContactList = [];
+    private readonly ObservableCollection<IPContact> _pContactList = [];
 
-    private ObservableCollection<IPContact> _newList = [];
+    private readonly ObservableCollection<IPContact> _newList = [];
 
     private readonly IFileRepository? _fileRepository;
 
@@ -90,7 +90,8 @@ public class PContactServices : IPContactServices
                 {
                     if (existingContact.Email.Equals(contact.Email, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        return new ObservableCollection<IPContact> { existingContact };
+                        //return new ObservableCollection<IPContact> { existingContact };
+                        return [existingContact];
                     }
                 }
             }
