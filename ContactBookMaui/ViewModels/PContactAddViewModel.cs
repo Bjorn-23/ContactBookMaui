@@ -15,7 +15,6 @@ public partial class PContactAddViewModel : ObservableObject
     {
         _pContactServices = pContactServices;
         PContactList = _pContactServices.GetAllContactsFromList();
-        UpdateContactList();
     }
 
     /// <summary>

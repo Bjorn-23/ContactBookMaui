@@ -29,8 +29,6 @@
                                     <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" >
                                         <Label Text="{Binding FullName}" />
                                         <Label Text="{Binding Email}" />
-                                        <!--<Label Text="{Binding PhoneNumber}" />
-                                        <Label Text="{Binding Address}" />-->
                                     </VerticalStackLayout>
 
                                 <Button Grid.Column="1" Text="{x:Static models:FASolidIcons.List}" FontFamily="FASolid" FontSize="20" TextColor="#f4f4f4" BackgroundColor="#d00D0AD4" Margin="5" Padding="12"

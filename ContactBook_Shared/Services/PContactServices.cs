@@ -1,7 +1,5 @@
-﻿
-using ContactBook_Shared.Interfaces;
+﻿using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
-using Microsoft.Maui.ApplicationModel.Communication;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Diagnostics;

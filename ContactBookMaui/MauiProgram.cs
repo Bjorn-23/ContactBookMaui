@@ -1,10 +1,9 @@
 ﻿using ContactBook_Shared.Interfaces;
-using ContactBook_Shared.Models;
 using ContactBook_Shared.Repositories;
 using ContactBook_Shared.Services;
 using ContactBookMaui.Pages;
 using ContactBookMaui.ViewModels;
-using Microsoft.Extensions.Logging;
+
 
 namespace ContactBookMaui
 {
@@ -41,26 +40,6 @@ namespace ContactBookMaui
 
             builder.Services.AddTransient<PContactDeleteViewModel>();
             builder.Services.AddTransient<ContactDeletePage>();
-
-            // OLD ONES BELOW
-
-            //builder.Services.AddSingleton<IFileServices, FileServices>();
-            //builder.Services.AddSingleton<IContactRepository, ContactRepository>();
-
-            ////builder.Services.AddSingleton<MainViewModel>();
-            ////builder.Services.AddSingleton<ContactMainPage>();
-
-            //builder.Services.AddSingleton<ListViewModel>();
-            //builder.Services.AddSingleton<ContactListPage>();
-
-            //builder.Services.AddTransient<AddViewModel>();
-            //builder.Services.AddTransient<ContactAddPage>();
-
-            //builder.Services.AddTransient<UpdateViewModel>();
-            //builder.Services.AddTransient<ContactUpdatePage>();
-
-            //builder.Services.AddTransient<DeleteViewModel>();
-            //builder.Services.AddTransient<ContactDeletePage>();
 
             return builder.Build();
         }

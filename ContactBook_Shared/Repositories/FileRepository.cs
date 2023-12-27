@@ -1,5 +1,4 @@
 ﻿using ContactBook_Shared.Interfaces;
-using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace ContactBook_Shared.Repositories;

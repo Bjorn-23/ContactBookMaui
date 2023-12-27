@@ -1,6 +1,5 @@
 ﻿using ContactBook_Shared.Models;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace ContactBook_Shared.Interfaces;
 

@@ -18,7 +18,7 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
         {
             PContactList = _pContactServices.GetAllContactsFromList();
         };
-        UpdateContactList();
+
     }
 
     /// <summary>
