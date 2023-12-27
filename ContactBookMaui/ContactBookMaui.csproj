@@ -82,6 +82,9 @@
 	  <MauiXaml Update="Pages\ContactDeletePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\ContactDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ContactListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContactBookMaui.Pages.ContactDetailsPage"
+             
+             xmlns:models="clr-namespace:ContactBook_Shared.Models;assembly=ContactBook_Shared"
+             xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
+             x:DataType="{x:Type viewmodel:PContactDetailsViewModel}"
+             
+             Title="Contact Details Page">
+    
+    <ScrollView Margin="15">
+        <Grid ColumnDefinitions="auto, *" ColumnSpacing="10" RowDefinitions="auto, auto, auto" RowSpacing="10">
+            
+            <Button Grid.Column="0" Text="{x:Static models:FASolidIcons.ArrowLeftLong}" FontSize="16" FontFamily="FASolid" BackgroundColor="#c4c4c4" Command="{Binding NavigateToListContactCommand}" Padding="20,8"/>
+
+
+            <CollectionView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding SinglePContactByEmail}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type models:PContact}">
+
+                        <Label Grid.Row="1" Grid.ColumnSpan="3" FontSize="16" FontAttributes="Bold" Margin="15,0">
+                            <Label.FormattedText>
+                                <FormattedString>
+
+                                    <Span Text="Contact Details for: " />
+
+                                    <Span Text="{Binding FullName}" FontAttributes="Bold"/>
+
+                                </FormattedString>
+
+                            </Label.FormattedText>
+                        </Label>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <CollectionView Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding SinglePContactByEmail}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type models:PContact}">
+
+                        <Frame Margin="15,0,0,15" BackgroundColor="#e7e7e7">
+                            <Grid ColumnDefinitions="*, auto, auto, auto" >
+
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="{Binding FullName}" />
+                                    <Label Text="{Binding Email}" />
+                                    <Label Text="{Binding PhoneNumber}" />
+                                    <Label Text="{Binding Address}" />
+                                </VerticalStackLayout>
+
+                                <Button Grid.Column="2" Text="{x:Static models:FASolidIcons.PenToSquare}" FontFamily="FASolid" FontSize="20" TextColor="#f4f4f4" BackgroundColor="#E034B33A" Margin="0,10,5,10" Padding="12"
+                                                            CommandParameter="{Binding .}"
+                                                            Command="{Binding Path=NavigateToUpdateContactCommand, Source={RelativeSource AncestorType={x:Type viewmodel:PContactDetailsViewModel}}}" />
+
+                                <Button Grid.Column="3" Text="{x:Static models:FASolidIcons.Trash}" FontFamily="FASolid" FontSize="20" TextColor="#f4f4f4" BackgroundColor="#E0cf2424" Margin="0,10,5,10" Padding="12"
+                                                            CommandParameter="{Binding .}"
+                                                            Command="{Binding Path=NavigateToDeleteContactCommand, Source={RelativeSource AncestorType={x:Type viewmodel:PContactDetailsViewModel}}}" />
+                            </Grid>
+                        </Frame>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+    </ScrollView>
+
+
+</ContentPage>

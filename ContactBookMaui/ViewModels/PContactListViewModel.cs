@@ -28,12 +28,12 @@ public partial class PContactListViewModel : ObservableObject
     private ObservableCollection<IPContact> _pContactList = [];
 
     /// <summary>
-    /// Passes information from the (PContact) associated with the "Edit" button pressed to (ContactUpdatedPage) and navigates there
+    /// Passes information, from the (PContact) associated with the "Edit" button that was pressed, to (ContactUpdatedPage) and navigates there
     /// </summary>
     /// <param name="contactToUpdate">(PContact) parameters</param>
     /// <returns></returns>
     [RelayCommand]
-    public async Task NavigateToUpdateContact(IPContact contactToUpdate)
+    public static async Task NavigateToUpdateContact(IPContact contactToUpdate)
     {
         IPContact contact = new PContact()
         {
@@ -53,12 +53,12 @@ public partial class PContactListViewModel : ObservableObject
     }
 
     /// <summary>
-    /// Passes information from the (PContact) associated with the "X" button pressed to (ContactDeletePage) and navigates there
+    /// Passes information, from the (PContact) associated with the "X" button that was pressed, to (ContactDeletePage) and navigates there
     /// </summary>
     /// <param name="contactToDelete">(PContact) parameters</param>
     /// <returns></returns>
     [RelayCommand]
-    public async Task NavigateToDeleteContact(IPContact contactToDelete)
+    public static async Task NavigateToDeleteContact(IPContact contactToDelete)
     {
         var parameters = new ShellNavigationQueryParameters
         {
@@ -68,20 +68,36 @@ public partial class PContactListViewModel : ObservableObject
         await Shell.Current.GoToAsync("//ContactDeletePage", parameters);
     }
 
+    /// <summary>
+    /// Passes information, from the (PContact) associated with the "List" button that was pressed, to (ContactDetailsPage) and navigates there.
+    /// </summary>
+    /// <param name="contactDetails">(PContact) parameters</param>
+    /// <returns></returns>
     [RelayCommand]
-    public async Task NavigateToAddWithNoData()
+    public static async Task NavigateToContactDetails(IPContact contactDetails)
+    {
+        var parameters = new ShellNavigationQueryParameters
+        {
+            {"PContact", contactDetails }
+        };
+
+        await Shell.Current.GoToAsync("//ContactDetailsPage", parameters);
+    }
+
+    [RelayCommand]
+    public static async Task NavigateToAddWithNoData()
     {
         await Shell.Current.GoToAsync("//ContactAddPage");
     }
 
     [RelayCommand]
-    public async Task NavigateToUpdateWithNoData()
+    public static async Task NavigateToUpdateWithNoData()
     {
         await Shell.Current.GoToAsync("//ContactUpdatePage");
     }
 
     [RelayCommand]
-    public async Task NavigateToDeleteWithNoData()
+    public static async Task NavigateToDeleteWithNoData()
     {
         await Shell.Current.GoToAsync("//ContactDeletePage");
     }

@@ -49,7 +49,7 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
     /// List displaying a custom text after updating a contact or deleting a contact.
     /// </summary>
     [ObservableProperty]
-    private ObservableCollection<string> _statusUpdateText = new ObservableCollection<string>();
+    private ObservableCollection<string> _statusUpdateText = [];
 
     /// <summary>
     /// Creates new ObservableCollection (_singlePContactByEmail) from email input in form (_emailOfContactToUpdateOrDelete) and the method (GetContactFromListByEmail)
@@ -131,7 +131,7 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
     /// <summary>
     /// Displays error messages when (GetContactByEmailButton) has wrong or missing input
     /// </summary>
-    private async void ErrorOnUpDateAlert(ErrorCodes errorCode)
+    private static async void ErrorOnUpDateAlert(ErrorCodes errorCode)
     {
         switch (errorCode)
         {

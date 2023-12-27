@@ -30,6 +30,9 @@ namespace ContactBookMaui
             builder.Services.AddSingleton<PContactListViewModel>();
             builder.Services.AddSingleton<ContactListPage>();
 
+            builder.Services.AddTransient<PContactDetailsViewModel>();
+            builder.Services.AddTransient<ContactDetailsPage>();
+
             builder.Services.AddTransient<PContactAddViewModel>();
             builder.Services.AddTransient<ContactAddPage>();
 
