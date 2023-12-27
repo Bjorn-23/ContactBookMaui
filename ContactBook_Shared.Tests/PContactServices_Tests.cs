@@ -1,14 +1,13 @@
-﻿
-/*using ContactBook_Shared.Interfaces;
+﻿using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
 using ContactBook_Shared.Services;
 using Moq;
 using System.Collections.ObjectModel;
 using System.Security.Cryptography;
 
-namespace AddressBookOne.Tests;
+namespace ContactBook_Shared.Tests;
 
-public class ContactRepository_Tests
+public class PContactServices_Tests
 {
 
     //Tests should be setup in order of 1. FileRepository 2. ContactServices to be able to work.
@@ -256,7 +255,4 @@ public class ContactRepository_Tests
         Assert.NotNull(result);
         Assert.Equivalent(list, result);
     }
-
 }
-
-*/
