@@ -6,24 +6,18 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
-internal enum ErrorCodes
-{
-    BadRequest, 
-    NotFound,
-}
 
-public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributable
+public partial class PContactDetailsViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IPContactServices _pContactServices;
 
-    public PContactUpdateViewModel(IPContactServices pContactServices)
+    public PContactDetailsViewModel(IPContactServices pContactServices)
     {
         _pContactServices = pContactServices;
         _pContactServices.PContactListUpdated += (sender, e) =>
         {
             PContactList = _pContactServices.GetAllContactsFromList();
         };
-        //UpdateContactList();
     }
     /// <summary>
     /// Form for filling in new details via (ContactAddPage )or edit details on (ContactUpdatePage)
@@ -56,12 +50,6 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
     private ObservableCollection<IPContact> _updatedContactByEmail = [];
 
     /// <summary>
-    /// List displaying a custom text after updating a contact or deleting a contact.
-    /// </summary>
-    [ObservableProperty]
-    private ObservableCollection<string> _statusUpdateText = [];
-
-    /// <summary>
     /// Creates new ObservableCollection (_singlePContactByEmail) from email input in form (_emailOfContactToUpdateOrDelete) and the method (GetContactFromListByEmail)
     /// </summary>
     /// <param name="contactToUpdate">Email param from IPContact</param>
@@ -74,19 +62,16 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
             {
                 SinglePContactByEmail = _pContactServices.GetContactFromListByEmail(contactToUpdate);
                 UpdatedContactByEmail = [];
-                if (StatusUpdateText.Any())
+
+                if (SinglePContactByEmail.Count == 0)
                 {
-                    StatusUpdateText.RemoveAt(0);
-                }
-                else if (SinglePContactByEmail.Count == 0)
-                {
-                    PContactUpdateViewModel.ErrorOnUpDateAlert(ErrorCodes.NotFound);
+                    PContactDetailsViewModel.ErrorOnUpDateAlert(ErrorCodes.NotFound);
                     ClearDataOnScreen();
                 }
             }
             else
             {
-                PContactUpdateViewModel.ErrorOnUpDateAlert(ErrorCodes.BadRequest);
+                PContactDetailsViewModel.ErrorOnUpDateAlert(ErrorCodes.BadRequest);
                 ClearDataOnScreen();
 
             }
@@ -97,79 +82,58 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
         }
     }
 
+
     /// <summary>
-    /// Sends (contactToDelete = SinglePContact) and (updatedContact = _registrationForm) to the method (UpdateContactToListByEmail)
+    /// Passes information, from the (PContact) associated with the "Edit" button that was pressed, to (ContactUpdatedPage) and navigates there
     /// </summary>
-    /// <param name="updatedContact">Input parameters from (RegistrationForm)</param>
+    /// <param name="contactToUpdate">(PContact) parameters</param>
+    /// <returns></returns>
     [RelayCommand]
-    public void UpdateContactButton(PContact updatedContact)
+    public static async Task NavigateToUpdateContact(IPContact contactToUpdate)
     {
-        if (RegistrationForm != null && !string.IsNullOrWhiteSpace(RegistrationForm.Email))
+        IPContact contact = new PContact()
         {
-            IPContact contactToUpdate = SinglePContactByEmail.FirstOrDefault()!;
+            FirstName = contactToUpdate.FirstName,
+            LastName = contactToUpdate.LastName,
+            Email = contactToUpdate.Email,
+            Address = contactToUpdate.Address,
+            PhoneNumber = contactToUpdate.PhoneNumber,
+        };
 
-            string textToAdd = "Updated To:";
+        var parameters = new ShellNavigationQueryParameters
+        {
+            {"PContact", contact }
+        };
 
-            if (contactToUpdate != null)
-            {
-                var result = _pContactServices.UpdateContactToListByEmail(contactToUpdate, updatedContact);
-                if (result)
-                {
-                    StatusUpdateText.Add(textToAdd);
-                    UpdatedContactByEmail = _pContactServices.GetContactFromListByEmail(updatedContact);
-                    UpdateContactList();
-                    RegistrationForm = new();
-
-                }
-            }
-        }
+        await Shell.Current.GoToAsync("//ContactUpdatePage", parameters);
     }
 
     /// <summary>
-    /// Cancels updating contact and returns to (ContactListPage)
+    /// Passes information, from the (PContact) associated with the "X" button that was pressed, to (ContactDeletePage) and navigates there
+    /// </summary>
+    /// <param name="contactToDelete">(PContact) parameters</param>
+    /// <returns></returns>
+    [RelayCommand]
+    public static async Task NavigateToDeleteContact(IPContact contactToDelete)
+    {
+        var parameters = new ShellNavigationQueryParameters
+        {
+            {"PContact", contactToDelete }
+        };
+
+        await Shell.Current.GoToAsync("//ContactDeletePage", parameters);
+    }
+
+    /// <summary>
+    /// Link To (ContactListPage), used in (AddContactToList)
     /// </summary>
     /// <returns></returns>
     [RelayCommand]
-    private async Task CancelAndNavigateToListContact()
+    private static async Task NavigateToListContact()
     {
-        ClearDataOnScreen();
         await Shell.Current.GoToAsync("//ContactListPage");
-
     }
 
-
-    /// <summary>
-    /// Displays error messages when (GetContactByEmailButton) has wrong or missing input
-    /// </summary>
-    /// <param name="errorCode">Enums representing error message in a clear way.</param>
-    private static async void ErrorOnUpDateAlert(ErrorCodes errorCode)
-    {
-        switch (errorCode)
-        {
-            case ErrorCodes.BadRequest:
-                await Shell.Current.DisplayAlert("400 Bad Request - No Email provided", "Please Enter An Email", "Continue")!;
-                break;
-            case ErrorCodes.NotFound:
-                await Shell.Current.DisplayAlert("404 Not Found - No Contact with that Email", "Please Enter A Valid Email", "Continue")!;
-                break;
-
-        }
-    }
-
-    /// <summary>
-    /// Updates (PContactlist) in methods after that method modifies it.
-    /// </summary>
-    public void UpdateContactList()
-    {
-        try
-        {
-            PContactList = _pContactServices.GetAllContactsFromList();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-        }
-    }
     /// <summary>
     /// Takes params via Edit button from list on (ContactListPage) and passes them to (GetContactByEmailButton). Also Prepoulates (RegistrationForm) on (ContactUpdatePage) with (contactToUpdate)
     /// </summary>
@@ -190,6 +154,24 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
     }
 
     /// <summary>
+    /// Displays error messages when (GetContactByEmailButton) has wrong or missing input
+    /// </summary>
+    /// <param name="errorCode">Enums representing error message in a clear way.</param>
+    private static async void ErrorOnUpDateAlert(ErrorCodes errorCode)
+    {
+        switch (errorCode)
+        {
+            case ErrorCodes.BadRequest:
+                await Shell.Current.DisplayAlert("400 Bad Request - No Email provided", "Please Enter An Email", "Continue")!;
+                break;
+            case ErrorCodes.NotFound:
+                await Shell.Current.DisplayAlert("404 Not Found - No Contact with that Email", "Please Enter A Valid Email", "Continue")!;
+                break;
+
+        }
+    }
+
+    /// <summary>
     /// Clears form data and textmessages displayed on (ContactUpdatePage)
     /// </summary>
     private void ClearDataOnScreen()
@@ -197,9 +179,5 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
         SinglePContactByEmail = [];
         UpdatedContactByEmail = [];
         RegistrationForm = new();
-        if (StatusUpdateText.Any())
-        {
-            StatusUpdateText.RemoveAt(0);
-        }
     }
 }

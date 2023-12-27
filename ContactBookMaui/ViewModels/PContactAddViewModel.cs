@@ -53,7 +53,7 @@ public partial class PContactAddViewModel : ObservableObject
     /// </summary>
     /// <returns></returns>
     [RelayCommand]
-    private async Task NavigateToListContact()
+    private static async Task NavigateToListContact()
     {
         await Shell.Current.GoToAsync("//ContactListPage");
     }
