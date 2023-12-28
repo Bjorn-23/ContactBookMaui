@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ContactBook_Shared.Enums;
 using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
 using System.Collections.ObjectModel;
@@ -68,7 +69,7 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
                 {
                     StatusUpdateText.RemoveAt(0);
                 }
-                else if (SinglePContactByEmail.Count == 0)
+                else if (SinglePContactByEmail == null)
                 {
                     ErrorOnUpDateAlert(ErrorCodes.NotFound);
                     ClearDataOnScreen();
@@ -185,6 +186,7 @@ public partial class PContactDeleteViewModel : ObservableObject, IQueryAttributa
     {
         SinglePContactByEmail = [];
         RegistrationForm = new();
+        EmailOfContactToUpdateOrDelete = new();
         if (StatusUpdateText.Any())
         {
             StatusUpdateText.RemoveAt(0);

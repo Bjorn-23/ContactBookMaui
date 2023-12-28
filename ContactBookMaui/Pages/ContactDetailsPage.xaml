@@ -7,15 +7,23 @@
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
              x:DataType="{x:Type viewmodel:PContactDetailsViewModel}"
              
-             Title="Contact Details Page">
+             Title="Contact Details">
     
     <ScrollView Margin="15">
-        <Grid ColumnDefinitions="auto, *" ColumnSpacing="10" RowDefinitions="auto, auto, auto" RowSpacing="10">
+        <Grid ColumnDefinitions="auto, *" ColumnSpacing="10" RowDefinitions="auto, auto, auto, auto" RowSpacing="10">
             
-            <Button Grid.Column="0" Text="{x:Static models:FASolidIcons.ArrowLeftLong}" FontSize="16" FontFamily="FASolid" BackgroundColor="#c4c4c4" Command="{Binding NavigateToListContactCommand}" Padding="20,8"/>
+            <Button Grid.Column="0" Text="{x:Static models:FASolidIcons.ArrowLeftLong}" FontSize="16" FontFamily="FASolid" BackgroundColor="#c4c4c4" Command="{Binding NavigateToListContactCommand}" Padding="40,8"/>
+
+            <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="3">
+
+                <Label Text="Type email of contact to update:" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
+                <Entry Text="{Binding EmailOfContactToUpdateOrDelete.Email}"/>
+
+                <Button Text="Show Contact Details" CommandParameter="{Binding EmailOfContactToUpdateOrDelete}" Command="{Binding Path=GetContactByEmailButtonCommand, Source={RelativeSource AncestorType={x:Type viewmodel:PContactDetailsViewModel}}}" Margin="0,15"/>
+            </VerticalStackLayout>
 
 
-            <CollectionView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding SinglePContactByEmail}" >
+            <CollectionView Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding SinglePContactByEmail}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type models:PContact}">
 
@@ -36,7 +44,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <CollectionView Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding SinglePContactByEmail}" >
+            <CollectionView Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding SinglePContactByEmail}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type models:PContact}">
 

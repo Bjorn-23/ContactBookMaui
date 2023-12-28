@@ -1,16 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ContactBook_Shared.Enums;
 using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace ContactBookMaui.ViewModels;
-internal enum ErrorCodes
-{
-    BadRequest, 
-    NotFound,
-}
 
 public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributable
 {
@@ -78,7 +74,7 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
                 {
                     StatusUpdateText.RemoveAt(0);
                 }
-                else if (SinglePContactByEmail.Count == 0)
+                else if (SinglePContactByEmail == null)
                 {
                     PContactUpdateViewModel.ErrorOnUpDateAlert(ErrorCodes.NotFound);
                     ClearDataOnScreen();
@@ -197,6 +193,7 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
         SinglePContactByEmail = [];
         UpdatedContactByEmail = [];
         RegistrationForm = new();
+        EmailOfContactToUpdateOrDelete = new();
         if (StatusUpdateText.Any())
         {
             StatusUpdateText.RemoveAt(0);

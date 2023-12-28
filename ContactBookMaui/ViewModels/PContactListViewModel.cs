@@ -91,6 +91,12 @@ public partial class PContactListViewModel : ObservableObject
     }
 
     [RelayCommand]
+    public static async Task NavigateToDetailsWithNoData()
+    {
+        await Shell.Current.GoToAsync("//ContactDetailsPage");
+    }
+
+    [RelayCommand]
     public static async Task NavigateToUpdateWithNoData()
     {
         await Shell.Current.GoToAsync("//ContactUpdatePage");

@@ -7,19 +7,20 @@
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
              x:DataType="{x:Type viewmodel:PContactListViewModel}"
              
-             Title="Contact List Page">
+             Title="Contact Book 3000 - Home to all your contacts">
 
     <ScrollView Margin="15">
 
-            <Grid RowDefinitions="auto, auto, auto" RowSpacing="20" ColumnDefinitions="*, *, *" ColumnSpacing="10" >
+            <Grid RowDefinitions="auto, auto, auto" RowSpacing="20" ColumnDefinitions="*, *, *, *" ColumnSpacing="10" >
 
             <Button Grid.Column="0" Text="Add" FontSize="16" BackgroundColor="#c4c4c4" Command="{Binding NavigateToAddWithNoDataCommand}"/>
-            <Button Grid.Column="1" Text="Update" FontSize="16" BackgroundColor="#c4c4c4" Command="{Binding NavigateToUpdateWithNoDataCommand}" />
-            <Button Grid.Column="2" Text="Delete" FontSize="16" BackgroundColor="#c4c4c4" Command="{Binding NavigateToDeleteWithNoDataCommand}" />
+            <Button Grid.Column="1" Text="Details" FontSize="16" BackgroundColor="#c4c4c4" Command="{Binding NavigateToDetailsWithNoDataCommand}"/>
+            <Button Grid.Column="2" Text="Update" FontSize="16" BackgroundColor="#c4c4c4" Command="{Binding NavigateToUpdateWithNoDataCommand}" />
+            <Button Grid.Column="3" Text="Delete" FontSize="16" BackgroundColor="#c4c4c4" Command="{Binding NavigateToDeleteWithNoDataCommand}" />
                 
             <Label Grid.Row="1" Grid.ColumnSpan="3" Text="All contacts in list:" FontSize="16" FontAttributes="Bold" Margin="15,0" />
 
-                <CollectionView Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding PContactList}" >
+                <CollectionView Grid.Row="2" Grid.ColumnSpan="4" ItemsSource="{Binding PContactList}" >
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="{x:Type models:PContact}">
 

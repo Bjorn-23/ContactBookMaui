@@ -7,14 +7,14 @@
              xmlns:viewmodel="clr-namespace:ContactBookMaui.ViewModels"
              x:DataType="{x:Type viewmodel:PContactAddViewModel}"
              
-             Title="Contact Add Page">
+             Title="Add Contact">
     
     
     <VerticalStackLayout Margin="15">
 
         <Grid ColumnDefinitions="auto,*,*" ColumnSpacing="10">
 
-            <Button Grid.Column="0" Text="{x:Static models:FASolidIcons.ArrowLeftLong}" FontSize="16" FontFamily="FASolid" BackgroundColor="#c4c4c4" Command="{Binding NavigateToListContactCommand}" Padding="20,8"/>
+            <Button Grid.Column="0" Text="{x:Static models:FASolidIcons.ArrowLeftLong}" FontSize="16" FontFamily="FASolid" BackgroundColor="#c4c4c4" Command="{Binding NavigateToListContactCommand}" Padding="40,8"/>
 
         </Grid>
 

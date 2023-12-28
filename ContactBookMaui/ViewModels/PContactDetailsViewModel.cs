@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ContactBook_Shared.Enums;
 using ContactBook_Shared.Interfaces;
 using ContactBook_Shared.Models;
 using System.Collections.ObjectModel;
@@ -63,7 +64,7 @@ public partial class PContactDetailsViewModel : ObservableObject, IQueryAttribut
                 SinglePContactByEmail = _pContactServices.GetContactFromListByEmail(contactToUpdate);
                 UpdatedContactByEmail = [];
 
-                if (SinglePContactByEmail.Count == 0)
+                if (SinglePContactByEmail == null)
                 {
                     PContactDetailsViewModel.ErrorOnUpDateAlert(ErrorCodes.NotFound);
                     ClearDataOnScreen();
@@ -129,8 +130,9 @@ public partial class PContactDetailsViewModel : ObservableObject, IQueryAttribut
     /// </summary>
     /// <returns></returns>
     [RelayCommand]
-    private static async Task NavigateToListContact()
+    private async Task NavigateToListContact()
     {
+        ClearDataOnScreen();
         await Shell.Current.GoToAsync("//ContactListPage");
     }
 
@@ -177,7 +179,6 @@ public partial class PContactDetailsViewModel : ObservableObject, IQueryAttribut
     private void ClearDataOnScreen()
     {
         SinglePContactByEmail = [];
-        UpdatedContactByEmail = [];
-        RegistrationForm = new();
+        EmailOfContactToUpdateOrDelete = new();
     }
 }
