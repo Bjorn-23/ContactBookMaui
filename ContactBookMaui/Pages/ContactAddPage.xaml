@@ -8,37 +8,39 @@
              x:DataType="{x:Type viewmodel:PContactAddViewModel}"
              
              Title="Add Contact">
-    
-    
-    <VerticalStackLayout Margin="15">
 
-        <Grid ColumnDefinitions="auto,*,*" ColumnSpacing="10">
+    <ScrollView Margin="15">
+        <VerticalStackLayout>
 
-            <Button Grid.Column="0" Text="{x:Static models:FASolidIcons.ArrowLeftLong}" FontSize="16" FontFamily="FASolid" BackgroundColor="#c4c4c4" Command="{Binding NavigateToListContactCommand}" Padding="40,8"/>
+            <Grid ColumnDefinitions="auto,*,*" ColumnSpacing="10">
 
-        </Grid>
+                <Button Grid.Column="0" Text="{x:Static models:FASolidIcons.ArrowLeftLong}" FontSize="16" FontFamily="FASolid" BackgroundColor="#c4c4c4" Command="{Binding NavigateToListContactCommand}" Padding="40,8"/>
 
-        <Label Text="Type in details for new contact" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
-       
-        <Label Text="First Name" Margin="10,15,0,5" />
-        <Entry Text="{Binding RegistrationForm.FirstName}"/>
+            </Grid>
 
-        <Label Text="Last Name" Margin="10,15,0,5"  />
-        <Entry Text="{Binding RegistrationForm.LastName}"/>
+            <Label Text="Type in details for new contact" FontSize="16" FontAttributes="Bold" Margin="10,15,0,5" />
 
-        <Label Text="Email" Margin="10,15,0,5"  />
-        <Entry Text="{Binding RegistrationForm.Email}"/>
+            <Label Text="First Name" Margin="10,15,0,5" />
+            <Entry Text="{Binding RegistrationForm.FirstName}"/>
 
-        <Label Text="Phone Number" Margin="10,15,0,5"  />
-        <Entry Text="{Binding RegistrationForm.PhoneNumber}"/>
+            <Label Text="Last Name" Margin="10,15,0,5"  />
+            <Entry Text="{Binding RegistrationForm.LastName}"/>
 
-        <Label Text="Address" Margin="10,15,0,5" />
-        <Entry Text="{Binding RegistrationForm.Address}"/>
+            <Label Text="Email" Margin="10,15,0,5"  />
+            <Entry Text="{Binding RegistrationForm.Email}"/>
+
+            <Label Text="Phone Number" Margin="10,15,0,5"  />
+            <Entry Text="{Binding RegistrationForm.PhoneNumber}"/>
+
+            <Label Text="Address" Margin="10,15,0,5" />
+            <Entry Text="{Binding RegistrationForm.Address}"/>
 
 
-        <Button Command="{Binding AddContactToListCommand}" Text="Add Contact To List" FontSize="16" BackgroundColor="#E034B33A" Margin="0,20,0,20" Padding="0,10"/>
+            <Button Command="{Binding AddContactToListCommand}" Text="Add Contact To List" FontSize="16" BackgroundColor="#E034B33A" Margin="0,20,0,20" Padding="0,10"/>
 
-        
-    </VerticalStackLayout>
-                        
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+
 </ContentPage>

@@ -1,4 +1,5 @@
 using ContactBookMaui.ViewModels;
+using Microsoft.Maui.ApplicationModel;
 
 namespace ContactBookMaui.Pages;
 
