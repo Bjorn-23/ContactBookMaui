@@ -12,7 +12,7 @@ The location of this file is environment dependant but here are locations where 
 ConsoleApp<br>
 C:\Users\{your username here}\AppData\Local\Contacts<br><br>
 MauiApp<br>
-C:\Users\{your username here}\AppData\Local\Packages\com.companyname.contactbookmaui_9zz4h110yvjzm\LocalCache\Local\Contacts.json<br><br>
+C:\Users\{your username here}\AppData\Local\Packages\com.companyname.contactbookmaui_9zz4h110yvjzm\LocalCache\Local\Contacts.json<br>
 
 (NB that contactbookmaui_9zz4h110yvjzm might be named differently on your system)<br>
 
