@@ -166,6 +166,7 @@ public partial class PContactUpdateViewModel : ObservableObject, IQueryAttributa
             Debug.WriteLine(ex.Message);
         }
     }
+
     /// <summary>
     /// Takes params via Edit button from list on (ContactListPage) and passes them to (GetContactByEmailButton). Also Prepoulates (RegistrationForm) on (ContactUpdatePage) with (contactToUpdate)
     /// </summary>

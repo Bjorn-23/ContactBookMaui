@@ -1,5 +1,4 @@
 ﻿namespace ContactBook_Shared.Models;
-
 public static class FARegularIcons
 {
     public const string Exclamation = "\u0021";

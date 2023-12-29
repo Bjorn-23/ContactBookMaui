@@ -1,6 +1,4 @@
-﻿using ContactBook_Shared.Models;
-
-namespace ContactBook_Shared.Interfaces;
+﻿namespace ContactBook_Shared.Interfaces;
 
 public interface IPContact
 {

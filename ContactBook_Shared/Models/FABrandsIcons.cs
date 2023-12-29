@@ -1,5 +1,4 @@
 ﻿namespace ContactBook_Shared.Models;
-
 public static class FABrandsIcons
 {
     public const string Exclamation = "\u0021";

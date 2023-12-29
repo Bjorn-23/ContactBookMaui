@@ -90,7 +90,7 @@ public partial class PContactDetailsViewModel : ObservableObject, IQueryAttribut
     /// <param name="contactToUpdate">(PContact) parameters</param>
     /// <returns></returns>
     [RelayCommand]
-    public static async Task NavigateToUpdateContact(IPContact contactToUpdate)
+    public async Task NavigateToUpdateContact(IPContact contactToUpdate)
     {
         IPContact contact = new PContact()
         {
@@ -105,7 +105,7 @@ public partial class PContactDetailsViewModel : ObservableObject, IQueryAttribut
         {
             {"PContact", contact }
         };
-
+        ClearDataOnScreen();
         await Shell.Current.GoToAsync("//ContactUpdatePage", parameters);
     }
 
@@ -115,13 +115,13 @@ public partial class PContactDetailsViewModel : ObservableObject, IQueryAttribut
     /// <param name="contactToDelete">(PContact) parameters</param>
     /// <returns></returns>
     [RelayCommand]
-    public static async Task NavigateToDeleteContact(IPContact contactToDelete)
+    public async Task NavigateToDeleteContact(IPContact contactToDelete)
     {
         var parameters = new ShellNavigationQueryParameters
         {
             {"PContact", contactToDelete }
         };
-
+        ClearDataOnScreen();
         await Shell.Current.GoToAsync("//ContactDeletePage", parameters);
     }
 

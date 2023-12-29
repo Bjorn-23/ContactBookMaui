@@ -194,6 +194,5 @@ public class PContactServices : IPContactServices
             Debug.WriteLine(ex);
         }
         return _newList;
-    }
-    
+    }    
 }
