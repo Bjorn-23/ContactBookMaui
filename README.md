@@ -25,7 +25,7 @@ such as "C:\Users\{your username here}\AppData\Local\Contacts<br>
 but rather creates its own list while the app is runnning.
 
 ## Summary
-A fun task in new environment ( for me, as of NOV-23) with a steep learning curve<br>
-It was highly rewardable in terms of challenge and has granted me a new skill set.<br>
+A fun task in new environment ( for me, as of NOV-23) with a steep learning curve.<br>
+It was a highly rewardable challenge and has granted me a new skill set.<br>
 <br>
 /Björn
