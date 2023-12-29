@@ -3,8 +3,8 @@ The goal of this assignment was to create a contact book that could add, view, u
 The contacts should be written to a file on disk, and should be retrieved upon starting the application.<br>
 
 ## Structure
-The project was build with a shared class librarary that both the console app and the Maui application has access to.<br>
-It implements interfaces, dependancy injection, a few SOLID principles, service pattern and MVVVM for the MAUI part.<br>
+The project was built with a shared class librarary that both the console app and the Maui application has access to.<br>
+It implements interfaces, dependancy injection, a few SOLID principles, service pattern and MVVVM for the MAUI app.<br>
 
 ## Funtions
 The goals have been met and a user can indeed add, view, update and delete contacts to and from a file on the disk.<br>
